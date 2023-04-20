@@ -1,3 +1,4 @@
+import 'package:amazon_clone/core/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       routerConfig: AppConfig.route,
-      // theme: Pallete.darkModeAppTheme,
+      theme: AppTheme.customTheme,
     );
   }
 }

@@ -38,6 +38,7 @@ dependencies:
   flutter_riverpod: ^2.3.5
   go_router: ^6.5.7
   dartz: ^0.10.1
+  file_picker: ^5.2.10
 
 dev_dependencies:
   flutter_test:
