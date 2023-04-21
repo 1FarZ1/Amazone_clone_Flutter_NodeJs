@@ -1,5 +1,5 @@
 import User from "../models/user.js";
-
+import bcrypt from "bcryptjs";
 
 // hada howa controller t3 auth li yhdr m3a auth , drnah hna for better architecture 
 let  signIn= (req, res) => {
@@ -9,7 +9,7 @@ let  signIn= (req, res) => {
 
 let  signUp= async (req, res) => {
     const {name, email ,password}  =  req.body;
-    console.log(req.body)
+    let hashedPass = await  bcrypt.hash(password,8);
   try {
     const  existingUser = await User.findOne({email});
     if(existingUser){
@@ -17,14 +17,14 @@ let  signUp= async (req, res) => {
     }
    let user = new User({
          email,
-         password,
+        password:hashedPass,
          name,
    })
    user = await user.save();
     res.status(200).json({user:user,msg:"User Created Successfully"});
 
   } catch (error) {
-    return res.status(404).json({msg : "something went wrong"})
+    return res.status(404).json({msg : "Error" + error })
   }
 };
 
