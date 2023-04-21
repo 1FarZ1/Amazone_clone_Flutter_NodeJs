@@ -25,7 +25,7 @@ class AuthRepoImpl implements AuthRepo {
           address: "",
           type: "",
           token: "",
-          cart: []);
+        );
       await apiService.signUp(data: user.toJson());
     } catch (e) {
       log(e.toString());
@@ -43,8 +43,10 @@ class AuthRepoImpl implements AuthRepo {
           address: "",
           type: "",
           token: "",
-          cart: []);
-      await apiService.signIn(data: user.toJson());
+    );
+      var data = await apiService.signIn(data: user.toJson());
+      user = User.fromMap(data);
+      print(user.toJson());
     } catch (e) {
       log(e.toString());
     }

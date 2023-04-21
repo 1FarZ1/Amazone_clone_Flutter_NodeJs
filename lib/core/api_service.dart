@@ -20,12 +20,10 @@ class ApiService {
           },
         ),
         data: data);
-    return result;
+    return result.data;
   }
 
   Future signIn({required data}) async {
-    log("called");
-    log(data);
     Response result = await _dio.post('$uri/api/signIn',
         options: Options(
           headers: {
@@ -33,6 +31,6 @@ class ApiService {
           },
         ),
         data: data);
-    return result;
+    return result.data;
   }
 }
