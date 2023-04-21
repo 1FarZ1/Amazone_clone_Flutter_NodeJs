@@ -6,6 +6,7 @@ let  signIn= (req, res) => {
 
 let  signUp= (req, res) => {
     const {name, email ,password}  =  req.body;
+    
 };
 
 let  signOut= (req, res) => {
