@@ -4,6 +4,7 @@
 
 import 'package:amazon_clone/core/providers/repos_provider.dart';
 import 'package:amazon_clone/features/auth/repository/auth_repo.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
@@ -19,9 +20,29 @@ class AuthController extends StateNotifier<AsyncValue> {
       : super(const AsyncData(null));
   final AuthRepoImpl authRepository;
 
-  Future<void> signInAnonymously() async {
+  
+
+  Future<void> register({
+    required BuildContext context,
+    required String email,
+    required String password,
+    required String name,
+  }) async {
     state = const AsyncLoading<void>();
 
-    state = await AsyncValue.guard(authRepository.login);
+    state = await AsyncValue.guard(() => authRepository.register(
+          email: email,
+          password: password,
+          name: name,
+        ));
+  }
+
+  Future<void> login({required email , required password}) async {
+    state = const AsyncLoading<void>();
+
+    state = await AsyncValue.guard(()=>authRepository.login(
+          email: email,
+          password: password,
+    ));
   }
 }
