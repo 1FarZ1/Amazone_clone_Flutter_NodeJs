@@ -6,6 +6,7 @@ import jwt from "jsonwebtoken";
 // hada howa controller t3 auth li yhdr m3a auth , drnah hna for better architecture 
 let  signIn= async (req, res) => {
     const {email , password} = req.body;
+    console.log(req.body);
     try {
         const  existingUser = await User.findOne({email});
         if(!existingUser){

@@ -16,7 +16,10 @@ class _SplashViewState extends ConsumerState<SplashView> {
   void initState() {
     super.initState();
     Future.delayed((const Duration(seconds: 2)), () {
+      // ref.watch(authStateProvider) == AuthStatus.notLoggedIn ?  
+      // GoRouter.of(context).push("/login") : GoRouter.of(context).push("/home");
       GoRouter.of(context).push("/login");
+    
     });
   }
 

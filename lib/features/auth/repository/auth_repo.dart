@@ -1,7 +1,10 @@
 import 'dart:developer';
 
 import 'package:amazon_clone/core/api_service.dart';
+import 'package:amazon_clone/core/errors/failire.dart';
 import 'package:amazon_clone/core/utils/type_def.dart';
+import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 
 import '../../../models/user.dart';
 
@@ -18,37 +21,45 @@ class AuthRepoImpl implements AuthRepo {
   Future register({required email, required password, required name}) async {
     try {
       User user = User(
-          id: "",
-          name: name,
-          email: email,
-          password: password,
-          address: "",
-          type: "",
-          token: "",
-        );
-      await apiService.signUp(data: user.toJson());
-    } catch (e) {
-      log(e.toString());
+        id: "",
+        name: name,
+        email: email,
+        password: password,
+        address: "",
+        type: "",
+        token: "",
+      );
+      var data = await apiService.signUp(data: user.toJson());
+      user = User.fromMap(data);
+      return Right(user);
+    } on Exception catch (e) {
+      if (e is DioError) {
+        return Left(ServerFailure.fromDioError(e));
+      }
+      return Left(ServerFailure(e.toString()));
     }
   }
 
   @override
-  Future login({required email, required password}) async {
+  FutureEither<User> login({required email, required password}) async {
     try {
       User user = User(
-          id: "",
-          name: "",
-          email: email,
-          password: password,
-          address: "",
-          type: "",
-          token: "",
-    );
+        id: "",
+        name: "",
+        email: email,
+        password: password,
+        address: "",
+        type: "",
+        token: "",
+      );
       var data = await apiService.signIn(data: user.toJson());
       user = User.fromMap(data);
-      print(user.toJson());
-    } catch (e) {
-      log(e.toString());
+      return Right(user);
+    } on Exception catch (e) {
+      if (e is DioError) {
+        return Left(ServerFailure.fromDioError(e));
+      }
+      return Left(ServerFailure(e.toString()));
     }
   }
 }

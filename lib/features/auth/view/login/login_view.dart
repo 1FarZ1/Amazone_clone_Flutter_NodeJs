@@ -1,6 +1,7 @@
 import 'package:amazon_clone/features/auth/controller/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/constant/constants.dart';
 import 'widgets/custom_button.dart';
@@ -52,6 +53,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
     ref.read(authControllerProvider.notifier).login(
           email: _emailController.text,
           password: _passwordController.text,
+          context: context,
         );
   }
 
@@ -135,7 +137,23 @@ class _LoginViewState extends ConsumerState<LoginView> {
                           ],
                         ),
                       ),
-                    )
+                    ),
+              ref.watch(authControllerProvider).when(
+                    data: (data) {
+                      if (data != null) {
+                        return const Text("Logged in Succesfully",
+                            style:
+                                TextStyle(color: Colors.green, fontSize: 20));
+                      }
+                      return const SizedBox.shrink();
+                    },
+                    loading: () =>
+                        const Center(child: CircularProgressIndicator()),
+                    error: (error, stack) => Center(
+                        child: Text(error.toString(),
+                            style: const TextStyle(
+                                color: Colors.red, fontSize: 20))),
+                  )
             ],
           ),
         ),
@@ -144,7 +162,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
   }
 
   clearInputField() {
-    Future.delayed(Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 10), () {
       _emailController.clear();
       _passwordController.clear();
       _nameController.clear();
