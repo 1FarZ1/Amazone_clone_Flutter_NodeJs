@@ -32,6 +32,9 @@ const UserSh =new sh({
         type:String,
         required:true,
         trim:true,
+     validator: (value)  => {
+            return value.length > 8 
+        },
     },
     adress:{
         type:String,
