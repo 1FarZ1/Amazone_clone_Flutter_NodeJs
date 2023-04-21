@@ -74,34 +74,6 @@ class _LoginViewState extends ConsumerState<LoginView> {
               const SizedBox(height: 50),
               (auth == Auth.signup)
                   ? Form(
-                      key: _signInFormKey,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                        child: Column(
-                          children: [
-                            CustomTextField(
-                              controller: _emailController,
-                              hintText: 'Email',
-                            ),
-                            const SizedBox(height: 24),
-                            CustomTextField(
-                              controller: _passwordController,
-                              hintText: 'Password',
-                            ),
-                            const SizedBox(height: 40),
-                            CustomButton(
-                              text: 'Sign In',
-                              onTap: () {
-                                if (_signInFormKey.currentState!.validate()) {
-                                  signInUser();
-                                }
-                              },
-                            )
-                          ],
-                        ),
-                      ),
-                    )
-                  : Form(
                       key: _signUpFormKey,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -126,6 +98,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                               text: 'Sign Up',
                               onTap: () {
                                 if (_signUpFormKey.currentState!.validate()) {
+                                  clearInputField();
                                   signUpUser();
                                 }
                               },
@@ -133,11 +106,46 @@ class _LoginViewState extends ConsumerState<LoginView> {
                           ],
                         ),
                       ),
-                    ),
+                    )
+                  : Form(
+                      key: _signInFormKey,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: Column(
+                          children: [
+                            CustomTextField(
+                              controller: _emailController,
+                              hintText: 'Email',
+                            ),
+                            const SizedBox(height: 24),
+                            CustomTextField(
+                              controller: _passwordController,
+                              hintText: 'Password',
+                            ),
+                            const SizedBox(height: 40),
+                            CustomButton(
+                              text: 'Sign In',
+                              onTap: () {
+                                if (_signInFormKey.currentState!.validate()) {
+                                  clearInputField();
+                                  signInUser();
+                                }
+                              },
+                            )
+                          ],
+                        ),
+                      ),
+                    )
             ],
           ),
         ),
       ),
     );
+  }
+
+  clearInputField() {
+    _emailController.clear();
+    _passwordController.clear();
+    _nameController.clear();
   }
 }

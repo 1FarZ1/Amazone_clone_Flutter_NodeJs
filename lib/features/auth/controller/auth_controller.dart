@@ -9,7 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
 final authControllerProvider =
-    StateNotifierProvider.autoDispose<AuthController, AsyncValue>(
+    StateNotifierProvider<AuthController, AsyncValue>(
         (ref) {
   return AuthController(
     authRepository: ref.watch(authRepoProvider),

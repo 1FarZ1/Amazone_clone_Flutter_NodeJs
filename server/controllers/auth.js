@@ -3,12 +3,28 @@ import bcrypt from "bcryptjs";
 
 // hada howa controller t3 auth li yhdr m3a auth , drnah hna for better architecture 
 let  signIn= (req, res) => {
+    const {email , password} = req.body;
+    try {
+        const  existingUser = User.findOne({email});
+        if(!existingUser){
+            return res.status(404).json({msg:"User Doesn't Exist"});
+        }   
+        return res.status(200).json({
+            msg:"User Signed In Successfully",
+            user:existingUser
+        })
+
+        
+    } catch (error) {
+            return res.status(404).json({msg : "Error" + error })
+
+    }
     
-    res.status(200).send("hello world");
 };
 
 let  signUp= async (req, res) => {
     const {name, email ,password}  =  req.body;
+    console.log(req.body);
     let hashedPass = await  bcrypt.hash(password,8);
   try {
     const  existingUser = await User.findOne({email});
@@ -36,3 +52,6 @@ let  signOut= (req, res) => {
 
 
 export { signUp,signIn ,signOut };
+
+
+//JWT 

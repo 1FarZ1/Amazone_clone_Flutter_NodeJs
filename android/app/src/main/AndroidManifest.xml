@@ -1,5 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.amazon_clone">
+        <uses-permission android:name="android.permission.INTERNET" />
+
    <application
         android:label="amazon_clone"
         android:name="${applicationName}"

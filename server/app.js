@@ -1,6 +1,7 @@
 import express, { json, urlencoded } from "express";
 import auth from "./routes/auth.js";
 import connectDb from "./mongoDbConnect.js";
+import jwt from "jsonwebtoken";
 
 const app=express();
 const PORT=8001;
@@ -10,10 +11,15 @@ app.use(json());
 app.use(urlencoded({extended:true}));
 
 app.use(auth); 
+
+
+
+
+app.use((req,res,next)=>{
+  res.status(404).json({msg:"404 Not Found"});
+})
+
  
-
-
-
 const main = () => {
   connectDb();
   app.listen(PORT, "0.0.0.0",() => {

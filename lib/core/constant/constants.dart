@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class AppConsts {
-  String uri = 'http://<yourip>:3000';
 
   static const appBarGradient = LinearGradient(
     colors: [
