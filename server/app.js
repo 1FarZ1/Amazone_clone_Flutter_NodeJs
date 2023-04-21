@@ -1,7 +1,6 @@
 import express, { json, urlencoded } from "express";
 import auth from "./routes/auth.js";
 import connectDb from "./mongoDbConnect.js";
-import jwt from "jsonwebtoken";
 
 const app=express();
 const PORT=8001;
@@ -20,8 +19,8 @@ app.use((req,res,next)=>{
 })
 
  
-const main = () => {
-  connectDb();
+const main = async () => {
+    await connectDb();
   app.listen(PORT, "0.0.0.0",() => {
       console.log("Server is running on port http://localhost:" + PORT);
   })
