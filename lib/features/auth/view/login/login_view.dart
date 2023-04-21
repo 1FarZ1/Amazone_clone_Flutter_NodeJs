@@ -3,13 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/constant/constants.dart';
+import 'widgets/custom_button.dart';
+import 'widgets/custom_text_field.dart';
+import 'widgets/header.dart';
+import 'widgets/methode_selection.dart';
 
 enum Auth {
   signin,
   signup,
 }
 
-final authTypeProvider = StateProvider((ref) {
+final authTypeProvider = StateProvider<Auth>((ref) {
   return Auth.signin;
 });
 
@@ -48,13 +52,14 @@ class _LoginViewState extends ConsumerState<LoginView> {
     ref.read(authControllerProvider.notifier).login(
           email: _emailController.text,
           password: _passwordController.text,
-    );
+        );
   }
 
   @override
   Widget build(BuildContext context) {
-    final _auth = ref.watch(authTypeProvider);
+    final auth = ref.watch(authTypeProvider);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: AppConsts.greyBackgroundCOlor,
       body: SafeArea(
         child: Padding(
@@ -62,50 +67,28 @@ class _LoginViewState extends ConsumerState<LoginView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Text(
-                'Welcome',
-                style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              ListTile(
-                tileColor: _auth == Auth.signup
-                    ? AppConsts.backgroundColor
-                    : AppConsts.greyBackgroundCOlor,
-                title: const Text(
-                  'Create Account',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                leading: Radio(
-                  activeColor: AppConsts.secondaryColor,
-                  value: Auth.signup,
-                  groupValue: _auth,
-                  onChanged: (Auth? val) {
-                    ref.read(authTypeProvider.notifier).state = val!;
-                  },
-                ),
-              ),
-              (_auth == Auth.signup)
-                  ? Container(
-                      padding: const EdgeInsets.all(8),
-                      color: AppConsts.backgroundColor,
-                      child: Form(
-                        key: _signInFormKey,
+              const SizedBox(height: 50),
+              Header(auth: auth),
+              const SizedBox(height: 30),
+              MethodeSelectionSection(auth: auth, ref: ref),
+              const SizedBox(height: 50),
+              (auth == Auth.signup)
+                  ? Form(
+                      key: _signInFormKey,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
                         child: Column(
                           children: [
                             CustomTextField(
                               controller: _emailController,
                               hintText: 'Email',
                             ),
-                            const SizedBox(height: 10),
+                            const SizedBox(height: 24),
                             CustomTextField(
                               controller: _passwordController,
                               hintText: 'Password',
                             ),
-                            const SizedBox(height: 10),
+                            const SizedBox(height: 40),
                             CustomButton(
                               text: 'Sign In',
                               onTap: () {
@@ -118,9 +101,38 @@ class _LoginViewState extends ConsumerState<LoginView> {
                         ),
                       ),
                     )
-                  : Container(
-                      height: 100,
-                      color: Colors.red,
+                  : Form(
+                      key: _signUpFormKey,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Column(
+                          children: [
+                            CustomTextField(
+                              controller: _nameController,
+                              hintText: 'Name',
+                            ),
+                            const SizedBox(height: 24),
+                            CustomTextField(
+                              controller: _emailController,
+                              hintText: 'Email',
+                            ),
+                            const SizedBox(height: 24),
+                            CustomTextField(
+                              controller: _passwordController,
+                              hintText: 'Password',
+                            ),
+                            const SizedBox(height: 40),
+                            CustomButton(
+                              text: 'Sign Up',
+                              onTap: () {
+                                if (_signUpFormKey.currentState!.validate()) {
+                                  signUpUser();
+                                }
+                              },
+                            )
+                          ],
+                        ),
+                      ),
                     ),
             ],
           ),
@@ -128,9 +140,4 @@ class _LoginViewState extends ConsumerState<LoginView> {
       ),
     );
   }
-
-  CustomTextField(
-      {required TextEditingController controller, required String hintText}) {}
-
-  CustomButton({required String text, required Null Function() onTap}) {}
 }

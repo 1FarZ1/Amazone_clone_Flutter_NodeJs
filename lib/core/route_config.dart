@@ -1,5 +1,4 @@
 import 'package:amazon_clone/features/auth/view/login/login_view.dart';
-import 'package:amazon_clone/features/auth/view/register/register_view.dart';
 import 'package:amazon_clone/features/splash/splash_view.dart';
 import 'package:go_router/go_router.dart';
 
@@ -17,11 +16,6 @@ abstract class AppConfig {
           ;
           return const LoginView();
         }),
-    GoRoute(
-        path: "/register",
-        builder: (context, state) {
-          ;
-          return const RegisterView();
-        }),
+
   ]);
 }

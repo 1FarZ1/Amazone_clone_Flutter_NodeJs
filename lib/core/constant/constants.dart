@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 
-
-
 class AppConsts {
-
   String uri = 'http://<yourip>:3000';
 
   static const appBarGradient = LinearGradient(
@@ -15,10 +12,11 @@ class AppConsts {
   );
 
   static const secondaryColor = Color.fromRGBO(255, 153, 0, 1);
-  static const backgroundColor = Colors.white;
-  static const Color greyBackgroundCOlor = Color(0xffebecee);
+  static const backgroundColor = Color.fromARGB(255, 29, 28, 28);
+  static const Color greyBackgroundCOlor = Color.fromARGB(255, 0, 0, 0);
   static var selectedNavBarColor = Colors.cyan[800]!;
   static const unselectedNavBarColor = Colors.black87;
+  static const textColor = Colors.white;
 
   // STATIC IMAGES
   static const List<String> carouselImages = [

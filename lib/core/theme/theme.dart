@@ -50,9 +50,9 @@ import 'package:amazon_clone/core/constant/constants.dart';
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  static  ThemeData customTheme = ThemeData(
+  static ThemeData customTheme = ThemeData(
     scaffoldBackgroundColor: AppConsts.backgroundColor,
-    colorScheme:  const ColorScheme.light(
+    colorScheme: const ColorScheme.dark(
       primary: AppConsts.secondaryColor,
     ),
     appBarTheme: const AppBarTheme(
