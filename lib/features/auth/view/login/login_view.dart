@@ -144,8 +144,10 @@ class _LoginViewState extends ConsumerState<LoginView> {
   }
 
   clearInputField() {
-    _emailController.clear();
-    _passwordController.clear();
-    _nameController.clear();
+    Future.delayed(Duration(seconds: 2), () {
+      _emailController.clear();
+      _passwordController.clear();
+      _nameController.clear();
+    });
   }
 }

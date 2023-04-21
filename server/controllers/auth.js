@@ -23,7 +23,6 @@ let  signIn= async (req, res) => {
             {id: existingUser._id},
             "passwordKey"
         );
-
         return res.status(200).json({
             msg:"User Signed In Successfully",
             token:token,
@@ -42,7 +41,6 @@ let  signIn= async (req, res) => {
 
 let  signUp= async (req, res) => {
     const {name, email ,password}  =  req.body;
-    console.log(req.body);
     let hashedPass = await  bcrypt.hash(password,8);
   try {
     const  existingUser = await User.findOne({email});
