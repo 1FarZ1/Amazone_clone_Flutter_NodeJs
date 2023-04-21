@@ -1,7 +1,11 @@
-import mongoose, { Schema, model } from "mongoose";
+// nimportiw mongoose  we njibo mnha wch ns79
+import mongoose from "mongoose";
 
+// hna ncriyiw instance mn shema 
 const sh = mongoose.Schema;
 
+
+// hna ndiro new shema mn shema builder bwch drnalo
 const UserSh =new sh({
     name:{
         type:String,
@@ -40,5 +44,6 @@ const UserSh =new sh({
     // cart
 
 })
-const User=model("Animes",UserSh);
+// we hna ndefiniw lmodel ta3na chakl we asm 
+const User= mongoose.model("User",UserSh);
 export default User;

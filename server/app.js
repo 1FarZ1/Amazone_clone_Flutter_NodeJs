@@ -1,35 +1,27 @@
 import express, { json, urlencoded } from "express";
 import auth from "./routes/auth.js";
-import { set, connect } from "mongoose";
-
-const dbURI= "mongodb+srv://Farz:mrfares77@cluster0.6zstawu.mongodb.net/?retryWrites=true&w=majority";
+import connectDb from "./middlewars/mongoDbConnect.js";
 
 const app=express();
-const HOSTNAME ="locaLhost";
 const PORT=8001;
+
+
 app.use(json());
 app.use(urlencoded({extended:true}));
 
 app.use(auth); 
-
-set('strictQuery', true);
-connect(dbURI,{useNewUrlParser:true, useUnifiedTopology:true}).then((result)=>{
-  console.log("connected to db");
-
- 
-}
-).catch((err)=>console.log(err));
-
  
 
-app.listen(PORT, "0.0.0.0", () => {
-  console.log(`connected at port ${PORT}`);
+
+
+const main = async () => {
+  await connectDb();
+  app.listen(PORT, "0.0.0.0",() => {
+      console.log("Server is running on port http://localhost:" + PORT);
+  })
 }
-);
-// app.listen(8001,"0.0.0.0",()=>{
-//     console.log("listening");
-// }
-// )
+
+main();
 
 
 
