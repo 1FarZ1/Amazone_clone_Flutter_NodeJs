@@ -9,8 +9,10 @@ import 'package:dio/dio.dart';
 import '../../../models/user.dart';
 
 abstract class AuthRepo {
-  Future login({required email, required password});
-  Future register({required email, required password, required name});
+  FutureEither<User> login({required email, required password});
+  FutureEither<User> register(
+      {required email, required password, required name});
+  FutureEither<User> getUserData({required token});
 }
 
 class AuthRepoImpl implements AuthRepo {
@@ -18,7 +20,8 @@ class AuthRepoImpl implements AuthRepo {
 
   AuthRepoImpl(this.apiService);
   @override
-  Future register({required email, required password, required name}) async {
+  FutureEither<User> register(
+      {required email, required password, required name}) async {
     try {
       User user = User(
         id: "",
@@ -55,6 +58,27 @@ class AuthRepoImpl implements AuthRepo {
       var data = await apiService.signIn(data: user.toJson());
       user = User.fromMap(data);
       return Right(user);
+    } on Exception catch (e) {
+      if (e is DioError) {
+        return Left(ServerFailure.fromDioError(e));
+      }
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  FutureEither<User> getUserData({required token}) async {
+    try {
+      var res = await apiService.isValid(token: token);
+      if (res == true) {
+        log(
+          "token is valid",
+        );
+        var data = await apiService.getUserData(token: token);
+        var user = User.fromMap(data);
+        return Right(user);
+      }
+      return Left(ServerFailure("User not found"));
     } on Exception catch (e) {
       if (e is DioError) {
         return Left(ServerFailure.fromDioError(e));

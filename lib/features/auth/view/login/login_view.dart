@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:amazon_clone/core/providers/shared_preference_provider.dart';
 import 'package:amazon_clone/features/auth/controller/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -100,7 +103,6 @@ class _LoginViewState extends ConsumerState<LoginView> {
                               text: 'Sign Up',
                               onTap: () {
                                 if (_signUpFormKey.currentState!.validate()) {
-                                  clearInputField();
                                   signUpUser();
                                 }
                               },
@@ -129,7 +131,6 @@ class _LoginViewState extends ConsumerState<LoginView> {
                               text: 'Sign In',
                               onTap: () {
                                 if (_signInFormKey.currentState!.validate()) {
-                                  clearInputField();
                                   signInUser();
                                 }
                               },
@@ -139,21 +140,21 @@ class _LoginViewState extends ConsumerState<LoginView> {
                       ),
                     ),
               ref.watch(authControllerProvider).when(
-                    data: (data) {
-                      if (data != null) {
-                        return const Text("Logged in Succesfully",
-                            style:
-                                TextStyle(color: Colors.green, fontSize: 20));
-                      }
-                      return const SizedBox.shrink();
-                    },
-                    loading: () =>
-                        const Center(child: CircularProgressIndicator()),
-                    error: (error, stack) => Center(
-                        child: Text(error.toString(),
-                            style: const TextStyle(
-                                color: Colors.red, fontSize: 20))),
-                  )
+                  data: (data) {
+                    if (data != null) {
+                      clearInputField();
+                      return const Text("Logged in Succesfully",
+                          style: TextStyle(color: Colors.green, fontSize: 20));
+                    }
+                    return const SizedBox.shrink();
+                  },
+                  loading: () =>
+                      const Center(child: CircularProgressIndicator()),
+                  error: (error, stack) {
+                    clearInputField();
+                    return const SizedBox.shrink();
+                  }),
+              
             ],
           ),
         ),
@@ -162,10 +163,8 @@ class _LoginViewState extends ConsumerState<LoginView> {
   }
 
   clearInputField() {
-    Future.delayed(const Duration(seconds: 10), () {
-      _emailController.clear();
-      _passwordController.clear();
-      _nameController.clear();
-    });
+    _emailController.clear();
+    _passwordController.clear();
+    _nameController.clear();
   }
 }

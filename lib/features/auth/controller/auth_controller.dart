@@ -3,23 +3,17 @@ import 'dart:developer';
 import 'package:amazon_clone/core/providers/repos_provider.dart';
 import 'package:amazon_clone/core/providers/shared_preference_provider.dart';
 import 'package:amazon_clone/core/providers/user_provider.dart';
+import 'package:amazon_clone/core/utils/custom_snack_bar.dart';
 import 'package:amazon_clone/features/auth/repository/auth_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final authControllerProvider =
     StateNotifierProvider<AuthController, AsyncValue>((ref) {
   return AuthController(authRepository: ref.watch(authRepoProvider), ref: ref);
 });
-final authStateProvider = Provider(
-  (ref) {
-    return ref
-        .watch(sharedPreferenceProvider)
-        .whenData((value) => value.get("x-auth-token"));
-    ;
-  },
-);
 
 class AuthController extends StateNotifier<AsyncValue> {
   AuthController({required this.authRepository, required this.ref})
@@ -53,16 +47,40 @@ class AuthController extends StateNotifier<AsyncValue> {
         .then((value) {
       value.fold((failure) {
         state = AsyncValue.error(failure.errorMessage, StackTrace.current);
+        showSnackBar(context, failure.errorMessage);
       }, (user) {
-        log(user.toJson());
         state = AsyncValue.data(user);
+
+        ref.watch(sharedPreferenceProvider)?.then((pref) {
+          pref.setString("x-auth-token", user.token);
+        });
         ref.read(userStateProvider.notifier).setUser(user);
-        ref.read(sharedPreferenceProvider).whenData((value) {
-          value.setString("x-auth-token", user.token);
-        });
-        Future.delayed(const Duration(seconds: 3), () {
-          GoRouter.of(context).push("/home");
-        });
+      });
+
+      // GoRouter.of(context).push("/home");
+    });
+  }
+
+  Future<void> getUserData() async {
+    log("============================GET USER DATA CALLED=====================================");
+    state = const AsyncLoading<void>();
+    var token;
+
+    ref.watch(sharedPreferenceProvider)?.then((pref) async {
+      token = pref.getString("x-auth-token");
+      if (token == null) {
+        log("token is null");
+        pref.setString('x-auth-token', '');
+      }
+      var res = await authRepository.getUserData(token: token);
+
+      res.fold((failire) {
+        log(failire.errorMessage.toUpperCase());
+        state = AsyncValue.error(failire.errorMessage, StackTrace.current);
+      }, (data) {
+        log(data.toJson().toString());
+        state = AsyncValue.data(data);
+        ref.read(userStateProvider.notifier).setUser(data);
       });
     });
   }

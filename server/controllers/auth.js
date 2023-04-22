@@ -61,6 +61,36 @@ let  signUp= async (req, res) => {
   }
 };
 
+let tokenValid = async (req, res) => {
+    try {
+        const token = req.header("x-auth-token");
+        if(!token){
+            return res.json(false);
+        }
+        const verified = jwt.verify(token,"passwordKey");
+        if(!verified){
+            return res.json(false);
+        }
+            const user = User.findById(verified.id);
+            if(!user){
+                return res.json(false);
+            }
+        }
+        catch(e){
+            return res.status(404).json({msg:e});
+        }
+    };
+
+
+
+let tempName = async (req, res) => {
+        const user = await User.findById(req.user);
+        res.json({ ...user._doc, token: req.token });
+      }
+
+
+
+
 let  signOut= (req, res) => {
     res.status(200).send("hello world");
 };
@@ -68,7 +98,10 @@ let  signOut= (req, res) => {
 
 
 
-export { signUp,signIn ,signOut };
+
+
+
+export { signUp,signIn ,signOut ,tokenValid,tempName};
 
 
 //JWT 

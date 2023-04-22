@@ -12,7 +12,6 @@ class UserSt extends StateNotifier<User?> {
   UserSt() : super(null);
 
   void setUser(User user) {
-    log("emiiteed");
     state = user;
   }
 
