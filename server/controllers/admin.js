@@ -20,8 +20,16 @@ let addProduct = async (req, res) => {
             return res.status(400).json({msg:"error happend" + error.message});
     }
 }
+let allProducts = async (req, res) => {
+    try {
+        const products = await Product.find({});
+        return res.status(200).json({msg:"All Products",products:products});
+    } catch (error) {
+            return res.status(400).json({msg:"error happend " + error.message});
+    }
+}
 
 
 
 
-export default addProduct;
+export {addProduct,allProducts}
