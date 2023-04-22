@@ -17,7 +17,9 @@ import 'models/user.dart';
 // use ref here
 
 void main() async {
-  final container = ProviderContainer();
+ 
+  WidgetsFlutterBinding.ensureInitialized();
+   final container = ProviderContainer();
 
   Future getData(ProviderContainer ref) {
     return ref.read(authControllerProvider.notifier).getUserData();
@@ -25,7 +27,6 @@ void main() async {
 
   final authState = await getData(container);
 
-  WidgetsFlutterBinding.ensureInitialized();
   runApp(UncontrolledProviderScope(container: container, child: MyApp()));
 }
 
@@ -37,19 +38,6 @@ class MyApp extends ConsumerStatefulWidget {
 }
 
 class _MyAppState extends ConsumerState<MyApp> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  bool isLoggedIn() {
-    log("is Logged out : ${ref.watch(userStateProvider) != User.Empty()}");
-
-    // ref.watch(authControllerProvider).when(data: data, error: error, loading: loading)
-
-    return ref.watch(userStateProvider).equals(User.Empty());
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
@@ -63,7 +51,7 @@ class _MyAppState extends ConsumerState<MyApp> {
         GoRoute(
           path: "/redirect",
           redirect: (context, state) {
-            if (isLoggedIn()) {
+            if (ref.watch(userStateProvider).equals(User.Empty())) {
               return "/login";
             } else {
               return "/home";

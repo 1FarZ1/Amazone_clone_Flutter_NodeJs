@@ -8,6 +8,7 @@ class CustomAppBarHome extends StatelessWidget with PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      leading: null,
       flexibleSpace: Container(
         decoration: const BoxDecoration(
           gradient: AppConsts.appBarGradient,
@@ -59,6 +60,7 @@ class CustomAppBarHome extends StatelessWidget with PreferredSizeWidget {
                     ),
                     hintText: 'Search Amazon.in',
                     hintStyle: const TextStyle(
+                      color: Colors.black38,
                       fontWeight: FontWeight.w500,
                       fontSize: 17,
                     ),

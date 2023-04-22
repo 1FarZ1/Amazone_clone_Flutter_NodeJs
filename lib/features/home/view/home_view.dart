@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/providers/user_provider.dart';
+import 'widgets/address_box.dart';
+import 'widgets/carousel_image.dart';
+import 'widgets/deal_of_day.dart';
+import 'widgets/top_categories.dart';
 
 class HomeView extends ConsumerWidget {
   const HomeView({super.key});
@@ -12,19 +16,18 @@ class HomeView extends ConsumerWidget {
     final user = ref.watch(userStateProvider);
     return Scaffold(
       appBar: const CustomAppBarHome(),
-      body: Center(
+      body: SingleChildScrollView(
         child: Column(
-          children: [
-            Text(user == null ? "No User" : user.email),
-            ElevatedButton(
-              onPressed: () {
-                ref.read(userStateProvider.notifier).removeUser();
-              },
-              child: const Text("Logout"),
-            ),
+          children: const [
+            AddressBox(),
+            SizedBox(height: 10),
+            TopCategories(),
+            SizedBox(height: 10),
+            CarouselImage(),
+            SizedBox(height: 10),
+            DealOfDay(),
           ],
         ),
-
       ),
     );
   }
