@@ -19,13 +19,14 @@ class HomeView extends ConsumerWidget {
       body: SingleChildScrollView(
         child: Column(
           children: const [
-            AddressBox(),
             SizedBox(height: 10),
             TopCategories(),
             SizedBox(height: 10),
             CarouselImage(),
             SizedBox(height: 10),
             DealOfDay(),
+
+            AddressBox(),
           ],
         ),
       ),

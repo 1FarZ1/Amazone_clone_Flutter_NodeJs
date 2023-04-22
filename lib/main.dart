@@ -3,12 +3,14 @@ import 'dart:developer';
 import 'package:amazon_clone/core/providers/user_provider.dart';
 import 'package:amazon_clone/core/theme/theme.dart';
 import 'package:amazon_clone/features/account/view/account_view.dart';
+import 'package:amazon_clone/features/add_product/view/add_product_view.dart';
 import 'package:amazon_clone/features/auth/controller/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'core/route_config.dart';
+import 'features/admin/view/admin_view.dart';
 import 'features/auth/view/login/login_view.dart';
 import 'features/home/view/home_view.dart';
 import 'features/splash/splash_view.dart';
@@ -17,9 +19,8 @@ import 'models/user.dart';
 // use ref here
 
 void main() async {
- 
   WidgetsFlutterBinding.ensureInitialized();
-   final container = ProviderContainer();
+  final container = ProviderContainer();
 
   Future getData(ProviderContainer ref) {
     return ref.read(authControllerProvider.notifier).getUserData();
@@ -54,7 +55,11 @@ class _MyAppState extends ConsumerState<MyApp> {
             if (ref.watch(userStateProvider).equals(User.Empty())) {
               return "/login";
             } else {
-              return "/home";
+              if (ref.watch(userStateProvider).type == "admin") {
+                return "/admin";
+              } else {
+                return "/home";
+              }
             }
           },
         ),
@@ -72,6 +77,11 @@ class _MyAppState extends ConsumerState<MyApp> {
             path: "/account",
             builder: (context, state) {
               return const AccountView();
+            }),
+        GoRoute(
+            path: "/admin",
+            builder: (context, state) {
+              return const AddProductScreen();
             }),
       ]),
       theme: AppTheme.customTheme,

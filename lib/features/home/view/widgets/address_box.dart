@@ -1,3 +1,4 @@
+import 'package:amazon_clone/core/constant/constants.dart';
 import 'package:flutter/material.dart';
 
 class AddressBox extends StatelessWidget {
@@ -22,6 +23,7 @@ class AddressBox extends StatelessWidget {
           Icon(
             Icons.location_on_outlined,
             size: 20,
+            color: Colors.black54,
           ),
           Expanded(
             child: Padding(
@@ -30,6 +32,7 @@ class AddressBox extends StatelessWidget {
                 'Delivery to temp - temp',
                 style: TextStyle(
                   fontWeight: FontWeight.w500,
+                  color: Colors.black54,
                 ),
                 overflow: TextOverflow.ellipsis,
               ),
@@ -43,6 +46,7 @@ class AddressBox extends StatelessWidget {
             child: Icon(
               Icons.arrow_drop_down_outlined,
               size: 18,
+              color: Colors.black54,
             ),
           )
         ],
