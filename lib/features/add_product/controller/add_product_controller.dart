@@ -27,7 +27,7 @@ class AddProductController extends StateNotifier<AsyncValue> {
     state = const AsyncLoading<void>();
     var token;
     
-   ref.watch(sharedPreferenceProvider)?.then((pref) async {
+   await ref.watch(sharedPreferenceProvider)?.then((pref) async {
       token = pref.getString("x-auth-token");
       });
     

@@ -56,18 +56,45 @@ class ApiService {
             'x-auth-token': token ?? ""
           },
         ));
-    
+
     return tokenRes.data;
   }
-  Future addProduct({required token, required  Product product}) async {
+
+  Future addProduct({required token, required Product product}) async {
     var tokenRes = await _dio.post('$uri/admin/add-product',
         options: Options(
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
             'x-auth-token': token ?? ""
           },
-        ),data: product.toJson());
-    
+        ),
+        data: product.toJson());
+
     return tokenRes.data;
+  }
+
+  Future getPosts({required token}) async {
+    var res = await _dio.get('$uri/admin/all-products',
+        options: Options(
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            'x-auth-token': token
+          },
+        ));
+    return res.data["products"];
+  }
+
+  Future deletePost({required token ,required id}) async {
+    var res = await _dio.post('$uri/admin/delete-product',
+        options: Options(
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            'x-auth-token': token
+          },
+          
+        ),data: {
+          id:id
+        });
+    return res.data["products"];
   }
 }

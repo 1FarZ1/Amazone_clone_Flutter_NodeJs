@@ -28,8 +28,18 @@ let allProducts = async (req, res) => {
             return res.status(400).json({msg:"error happend " + error.message});
     }
 }
+let deleteProduct = async (req,res)=>{
+    try {
+            const {id} = req.body;
+            let products= await Product.findByIdAndDelete(id);
+             products = await  products.save();
+            return res.status(200).json({msg:"Product Deleted Successfully",products:products});
+    } catch (error) {
+        
+    }
+}
 
 
 
 
-export {addProduct,allProducts}
+export {addProduct,allProducts,deleteProduct}

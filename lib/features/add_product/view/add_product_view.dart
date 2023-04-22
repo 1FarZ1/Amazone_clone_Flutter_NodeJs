@@ -74,7 +74,6 @@ class _AddProductScreenState extends ConsumerState<AddProductScreen> {
       appBar: const CustomAppBarAddProduct(),
       body: SingleChildScrollView(
           child: ref.watch(addProductControllerProvider).when(data: (data) {
-        log("data is here ");
         if (data == null) {
           return Form(
             key: _addProductFormKey,
@@ -136,8 +135,8 @@ class _AddProductScreenState extends ConsumerState<AddProductScreen> {
           );
         }
       }, error: (error, stackTrace) {
-        return const Text(
-          "Something went Wrong ",
+        return Text(
+          "Something went Wrong $error",
           style: TextStyle(color: Colors.white),
         );
       }, loading: () {

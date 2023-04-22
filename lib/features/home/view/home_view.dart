@@ -25,7 +25,6 @@ class HomeView extends ConsumerWidget {
             CarouselImage(),
             SizedBox(height: 10),
             DealOfDay(),
-
             AddressBox(),
           ],
         ),
