@@ -64,6 +64,7 @@ let  signUp= async (req, res) => {
 let tokenValid = async (req, res) => {
     try {
         const token = req.header("x-auth-token");
+
         if(!token){
             return res.json(false);
         }
@@ -75,6 +76,7 @@ let tokenValid = async (req, res) => {
             if(!user){
                 return res.json(false);
             }
+            return res.json(true);
         }
         catch(e){
             return res.status(404).json({msg:e});
@@ -84,6 +86,7 @@ let tokenValid = async (req, res) => {
 
 
 let tempName = async (req, res) => {
+        console.log("temp name");
         const user = await User.findById(req.user);
         res.json({ ...user._doc, token: req.token });
       }

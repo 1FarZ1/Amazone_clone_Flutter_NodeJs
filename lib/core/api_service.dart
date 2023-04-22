@@ -36,15 +36,14 @@ class ApiService {
 
   Future isValid({required token}) async {
     log("token : $token");
-    var tokenRes = await _dio.post('$uri/tokenIsValid',
+    var tokenRes = await _dio.post('$uri/api/tokenIsValid',
         options: Options(
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
             'x-auth-token': token ?? ""
           },
         ));
-    var response = jsonDecode(tokenRes.data);
-    return response;
+    return tokenRes.data;
   }
 
   Future getUserData({required token}) async {
@@ -56,7 +55,7 @@ class ApiService {
             'x-auth-token': token ?? ""
           },
         ));
-    var response = jsonDecode(tokenRes.data);
-    return response;
+    
+    return tokenRes.data;
   }
 }

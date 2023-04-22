@@ -63,7 +63,6 @@ class AuthController extends StateNotifier<AsyncValue> {
 
   Future<void> getUserData() async {
     log("============================GET USER DATA CALLED=====================================");
-    state = const AsyncLoading<void>();
     var token;
 
     ref.watch(sharedPreferenceProvider)?.then((pref) async {

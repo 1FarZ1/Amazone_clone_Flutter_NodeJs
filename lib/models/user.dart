@@ -50,6 +50,18 @@ class User {
       // ),
     );
   }
+  factory User.Empty(){
+    return User(
+      id: '',
+      name: '',
+      email: '',
+      password: '',
+      address: '',
+      type: '',
+      token: '',
+      // cart: [],
+    );
+  }
 
   String toJson() => json.encode(toMap());
 
@@ -75,5 +87,13 @@ class User {
       token: token ?? this.token,
       // cart: cart ?? this.cart,
     );
+  }
+   @override
+  bool equals(User other) {
+    if(this.email == other.email && this.password == other.password){
+      return true;
+    }
+    return false;
+   
   }
 }
