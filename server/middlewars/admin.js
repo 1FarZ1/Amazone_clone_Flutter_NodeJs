@@ -13,20 +13,18 @@ const admin = async (req, res, next) => {
             return res.status(401).json({msg:"Token Verification Failed, Authorization Denied"});
         }
         const user= User.findById(verified.id);
-        if(!(user.type ==  "admin")){
+
+        if(user.type ==  "seller" ||user.type == "user"  ){
             return res.status(401).json({msg:"You are Unauthorized " + error.message})
-
         }
-        else{
-
+        
         req.user = verified.id;
         req.token = token;
         next();
-    }
 
-        
+ 
     } catch (error) {
-        return res.status(400).json({msg:"Error" + error.message});
+        return res.status(400).json({msg:"Error ; " + error.message});
     }
 };
 

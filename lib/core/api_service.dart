@@ -4,6 +4,8 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 
+import '../models/product.dart';
+
 const uri = 'http://192.168.1.34:8001';
 
 class ApiService {
@@ -57,14 +59,14 @@ class ApiService {
     
     return tokenRes.data;
   }
-  Future addProduct({required token, required product}) async {
+  Future addProduct({required token, required  Product product}) async {
     var tokenRes = await _dio.post('$uri/admin/add-product',
         options: Options(
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
             'x-auth-token': token ?? ""
           },
-        ),data: product);
+        ),data: product.toJson());
     
     return tokenRes.data;
   }

@@ -1,6 +1,9 @@
 import express, { json, urlencoded } from "express";
 import auth from "./routes/auth.js";
+import admin from "./routes/admin.js";
+
 import connectDb from "./mongoDbConnect.js";
+
 
 // lazm trevisi middleware  we tchof wchno homa 100 exacte 
 
@@ -12,6 +15,7 @@ app.use(json());
 app.use(urlencoded({extended:true}));
 
 app.use(auth); 
+app.use(admin);
 
 
 
