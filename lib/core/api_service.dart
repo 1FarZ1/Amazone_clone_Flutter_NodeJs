@@ -47,7 +47,6 @@ class ApiService {
   }
 
   Future getUserData({required token}) async {
-    log("called :  $token");
     var tokenRes = await _dio.get('$uri/',
         options: Options(
           headers: <String, String>{
@@ -55,6 +54,17 @@ class ApiService {
             'x-auth-token': token ?? ""
           },
         ));
+    
+    return tokenRes.data;
+  }
+  Future addProduct({required token, required product}) async {
+    var tokenRes = await _dio.post('$uri/admin/add-product',
+        options: Options(
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            'x-auth-token': token ?? ""
+          },
+        ),data: product);
     
     return tokenRes.data;
   }

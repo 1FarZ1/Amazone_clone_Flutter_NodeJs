@@ -1,23 +1,25 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:amazon_clone/core/constant/constants.dart';
+import 'package:amazon_clone/features/add_product/controller/add_product_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/utils/image_picker.dart';
 import '../../auth/view/login/widgets/custom_button.dart';
 import '../../auth/view/login/widgets/custom_text_field.dart';
 
-class AddProductScreen extends StatefulWidget {
-  static const String routeName = '/add-product';
+class AddProductScreen extends ConsumerStatefulWidget {
   const AddProductScreen({Key? key}) : super(key: key);
 
   @override
-  State<AddProductScreen> createState() => _AddProductScreenState();
+  ConsumerState<AddProductScreen> createState() => _AddProductScreenState();
 }
 
-class _AddProductScreenState extends State<AddProductScreen> {
+class _AddProductScreenState extends ConsumerState<AddProductScreen> {
   final TextEditingController productNameController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
@@ -46,17 +48,17 @@ class _AddProductScreenState extends State<AddProductScreen> {
   ];
 
   void sellProduct() {
-    // if (_addProductFormKey.currentState!.validate() && images.isNotEmpty) {
-    //   adminServices.sellProduct(
-    //     context: context,
-    //     name: productNameController.text,
-    //     description: descriptionController.text,
-    //     price: double.parse(priceController.text),
-    //     quantity: double.parse(quantityController.text),
-    //     category: category,
-    //     images: images,
-    //   );
-    // }
+    if (_addProductFormKey.currentState!.validate() && images.isNotEmpty) {
+      ref.read(addProductControllerProvider.notifier).addProduct(
+            context: context,
+            name: productNameController.text,
+            description: descriptionController.text,
+            price: double.parse(priceController.text),
+            quantity: double.parse(quantityController.text),
+            category: category,
+            images: images,
+          );
+    }
   }
 
   void selectImages() async {
@@ -71,59 +73,76 @@ class _AddProductScreenState extends State<AddProductScreen> {
     return Scaffold(
       appBar: const CustomAppBarAddProduct(),
       body: SingleChildScrollView(
-        child: Form(
-          key: _addProductFormKey,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30.0),
-            child: Column(
-              children: [
-                const SizedBox(height: 20),
-                images.isNotEmpty
-                    ? CustomCarousel(images: images)
-                    : CustomPicker(
-                        selectImages: selectImages,
-                      ),
-                const SizedBox(height: 30),
-                CustomTextField(
-                    controller: productNameController,
-                    hintText: 'Product Name'),
-                const SizedBox(height: 10),
-                CustomTextField(
-                    controller: descriptionController,
-                    hintText: 'Description',
-                    maxLines: 7),
-                const SizedBox(height: 10),
-                CustomTextField(controller: priceController, hintText: 'Price'),
-                const SizedBox(height: 10),
-                CustomTextField(
-                    controller: quantityController, hintText: 'Quantity'),
-                const SizedBox(height: 20),
-                Container(
-                  width: double.infinity,
-                  alignment: Alignment.center,
-                  child: DropdownButton(
-                    value: category,
-                    icon: const Icon(Icons.keyboard_arrow_down),
-                    items: productCategories.map((String item) {
-                      return DropdownMenuItem(
-                        value: item,
-                        child: Text(item),
-                      );
-                    }).toList(),
-                    onChanged: (String? newVal) {
-                      setState(() {
-                        category = newVal!;
-                      });
-                    },
+          child: ref.watch(addProductControllerProvider).when(data: (data) {
+        log("data is here ");
+        if (data == null) {
+          return Form(
+            key: _addProductFormKey,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30.0),
+              child: Column(
+                children: [
+                  const SizedBox(height: 20),
+                  images.isNotEmpty
+                      ? CustomCarousel(images: images)
+                      : CustomPicker(
+                          selectImages: selectImages,
+                        ),
+                  const SizedBox(height: 30),
+                  CustomTextField(
+                      controller: productNameController,
+                      hintText: 'Product Name'),
+                  const SizedBox(height: 10),
+                  CustomTextField(
+                      controller: descriptionController,
+                      hintText: 'Description',
+                      maxLines: 7),
+                  const SizedBox(height: 10),
+                  CustomTextField(
+                      controller: priceController, hintText: 'Price'),
+                  const SizedBox(height: 10),
+                  CustomTextField(
+                      controller: quantityController, hintText: 'Quantity'),
+                  const SizedBox(height: 20),
+                  Container(
+                    width: double.infinity,
+                    alignment: Alignment.center,
+                    child: DropdownButton(
+                      value: category,
+                      icon: const Icon(Icons.keyboard_arrow_down),
+                      items: productCategories.map((String item) {
+                        return DropdownMenuItem(
+                          value: item,
+                          child: Text(item),
+                        );
+                      }).toList(),
+                      onChanged: (String? newVal) {
+                        setState(() {
+                          category = newVal!;
+                        });
+                      },
+                    ),
                   ),
-                ),
-                const SizedBox(height: 20),
-                CustomButton(text: 'Sell', onTap: sellProduct),
-              ],
+                  const SizedBox(height: 20),
+                  CustomButton(text: 'Sell', onTap: sellProduct),
+                ],
+              ),
             ),
-          ),
-        ),
-      ),
+          );
+        } else {
+          return Text(
+            data.toString(),
+            style: TextStyle(color: Colors.white),
+          );
+        }
+      }, error: (error, stackTrace) {
+        return const Text(
+          "Something went Wrong ",
+          style: TextStyle(color: Colors.white),
+        );
+      }, loading: () {
+        return const CircularProgressIndicator();
+      })),
     );
   }
 }
