@@ -44,6 +44,7 @@ dependencies:
   badges: ^3.1.1
   carousel_slider: ^4.2.1
   dotted_border: ^2.0.0+3
+  cloudinary_public: ^0.13.0
 
 dev_dependencies:
   flutter_test:

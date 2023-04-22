@@ -2,6 +2,8 @@ import express, { json, urlencoded } from "express";
 import auth from "./routes/auth.js";
 import connectDb from "./mongoDbConnect.js";
 
+// lazm trevisi middleware  we tchof wchno homa 100 exacte 
+
 const app=express();
 const PORT=8001;
 
