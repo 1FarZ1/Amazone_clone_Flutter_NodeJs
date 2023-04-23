@@ -29,6 +29,7 @@ let allProducts = async (req, res) => {
     }
 }
 let deleteProduct = async (req,res)=>{
+    console.log("delete trigged");
     try {
             const {id} = req.body;
             let products= await Product.findByIdAndDelete(id);

@@ -84,17 +84,16 @@ class ApiService {
     return res.data["products"];
   }
 
-  Future deletePost({required token ,required id}) async {
+  Future deletePost({required token, required id}) async {
     var res = await _dio.post('$uri/admin/delete-product',
         options: Options(
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
             'x-auth-token': token
           },
-          
-        ),data: {
-          id:id
-        });
+        ),
+        data: {id: id});
+    print(res.data);
     return res.data["products"];
   }
 }

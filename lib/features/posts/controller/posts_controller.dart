@@ -11,38 +11,47 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../models/product.dart';
+
 final postControllerProvider =
     StateNotifierProvider<PostsController, AsyncValue>((ref) {
   return PostsController(postsRepoImpl: ref.watch(postsRepoProvider), ref: ref);
 });
 
-class PostsController extends StateNotifier<AsyncValue> {
+class PostsController extends StateNotifier<AsyncValue<List<Product>?>> {
   PostsController({required this.postsRepoImpl, required this.ref})
-      : super(const AsyncData(null));
+      : super(AsyncData(null));
   final PostsRepoImpl postsRepoImpl;
   final StateNotifierProviderRef ref;
 
   Future<void> getPosts({required BuildContext context}) async {
-    state = const AsyncLoading<void>();
+    state = AsyncLoading<List<Product>?>();
     var token;
     await ref.watch(sharedPreferenceProvider)?.then((pref) async {
       token = pref.getString("x-auth-token");
-
     });
-    state = await AsyncValue.guard(() => postsRepoImpl.getPosts(token: token));
+    await postsRepoImpl.getPosts(token: token).then((value) {
+      value.fold((failure) {
+        print(failure.toString());
+        state = AsyncValue.error(failure, StackTrace.empty);
+      }, (products) {
+        state = AsyncValue.data(products);
+      });
+    });
   }
 
-  
-
-  Future<void> deletePost({required BuildContext context,required id}) async {
-    state = const AsyncLoading<void>();
+  Future<void> deletePost({required BuildContext context, required id}) async {
+    state = const AsyncLoading<List<Product>?>();
     var token;
     await ref.watch(sharedPreferenceProvider)?.then((pref) async {
       token = pref.getString("x-auth-token");
-
     });
-    state = await AsyncValue.guard(() => postsRepoImpl.deletePosts(token: token, id: id));
+    await postsRepoImpl.deletePosts(token: token, id: id).then((value) {
+      value.fold((failure) {
+        state = AsyncValue.error(failure, StackTrace.empty);
+      }, (products) {
+        state = AsyncValue.data(products);
+      });
+    });
   }
-
-
 }

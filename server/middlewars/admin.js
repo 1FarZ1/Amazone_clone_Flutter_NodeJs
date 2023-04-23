@@ -4,9 +4,8 @@ import User from '../models/user.js'
 
 const admin = async (req, res, next) => {
     try {
-        
+        console.log("admin path  trigged");
         const token  = req.header("x-auth-token");
-        console.log(token);
         if(!token){
             console.log("go out");
             return res.status(401).json({msg:"No Authentication Token, Authorization Denied"});
