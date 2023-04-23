@@ -1,13 +1,9 @@
-import 'dart:developer';
-
-import 'package:amazon_clone/core/providers/repos_provider.dart';
 import 'package:amazon_clone/features/posts/controller/posts_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/common/loader.dart';
-import '../../../core/providers/product_provider.dart';
 import '../../../models/product.dart';
 import '../../account/view/widgets/single_product.dart';
 
@@ -33,7 +29,7 @@ class _PostsScreenState extends ConsumerState<PostsScreen> {
   void deleteProduct(Product product, int index) {
     ref
         .read(postControllerProvider.notifier)
-        .deletePost(context: context, id: index);
+        .deletePost(context: context, id: product.id);
   }
 
   void navigateToAddProduct() {
@@ -48,7 +44,7 @@ class _PostsScreenState extends ConsumerState<PostsScreen> {
           if (products == [] || products == null) {
             return const Center(child: Text("No Posts Yet"));
           }
-      
+
           return Scaffold(
             body: GridView.builder(
               itemCount: products!.length,

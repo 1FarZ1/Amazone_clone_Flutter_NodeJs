@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
@@ -21,7 +19,7 @@ class PostsRepoImpl implements PostsRepo {
     try {
       List<Product> listProducts = [];
       var res = await apiService.getPosts(token: token);
-      for (var i in res) {
+      for (var i in res["products"]) {
         listProducts.add(Product.fromMap(i));
       }
       return Right(listProducts);

@@ -36,15 +36,14 @@ class ServerFailure extends Failure {
     }
   }
   factory ServerFailure.fromResponse(int? statuscode, dynamic res) {
+    print(res);
     if (statuscode == 400 || statuscode == 401 || statuscode == 403) {
       return ServerFailure(res["error"]["message"]);
     } else if (statuscode == 404) {
       return ServerFailure("bad request! pls try again later ");
-    }
-    else if(statuscode ==500){
+    } else if (statuscode == 500) {
       return ServerFailure("server going down ! pls try again later ");
-    }
-    else{
+    } else {
       return ServerFailure("something went wrong ! pls try again later ");
     }
   }

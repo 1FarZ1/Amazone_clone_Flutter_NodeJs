@@ -1,4 +1,4 @@
-import Product from '../models/product.js';
+import {Product} from '../models/product.js';
 
 let addProduct = async (req, res) => {
     try {
@@ -29,14 +29,18 @@ let allProducts = async (req, res) => {
     }
 }
 let deleteProduct = async (req,res)=>{
-    console.log("delete trigged");
     try {
             const {id} = req.body;
+            console.log(id);
+
             let products= await Product.findByIdAndDelete(id);
-             products = await  products.save();
             return res.status(200).json({msg:"Product Deleted Successfully",products:products});
     } catch (error) {
-        
+            console.log(error);
+            return res.status(400).json({error:{
+                error:"my name is jhon",
+                msg:error
+            }});
     }
 }
 

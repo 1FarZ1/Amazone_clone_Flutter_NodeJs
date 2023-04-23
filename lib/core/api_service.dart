@@ -81,7 +81,7 @@ class ApiService {
             'x-auth-token': token
           },
         ));
-    return res.data["products"];
+    return res.data;
   }
 
   Future deletePost({required token, required id}) async {
@@ -93,7 +93,6 @@ class ApiService {
           },
         ),
         data: {id: id});
-    print(res.data);
-    return res.data["products"];
+    return res.data;
   }
 }
