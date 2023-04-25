@@ -81,6 +81,7 @@ class _MyAppState extends ConsumerState<MyApp> {
             }),
         GoRoute(
             path: "/category",
+            
             builder: (context, state) {
               return  CategoryDealsScreen(
                 category: state.extra as String,

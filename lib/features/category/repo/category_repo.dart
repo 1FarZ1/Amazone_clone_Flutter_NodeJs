@@ -7,7 +7,8 @@ import '../../../core/utils/type_def.dart';
 import '../../../models/product.dart';
 
 abstract class CategoryRepo {
-  FutureEither<List<Product>> fetchCategoryProducts({required String token,required String category});
+  FutureEither<List<Product>> fetchCategoryProducts(
+      {required String token, required String category});
 }
 
 class CategoryRepoImpl implements CategoryRepo {
@@ -16,11 +17,11 @@ class CategoryRepoImpl implements CategoryRepo {
 
   @override
   FutureEither<List<Product>> fetchCategoryProducts(
-      {required String token,required String category}
-      ) async {
+      {required String token, required String category}) async {
     try {
       List<Product> listProducts = [];
-      var res = await apiService.getCategoryProducts(token:token,category: category);
+      var res = await apiService.getCategoryProducts(
+          token: token, category: category);
       for (var i in res["products"]) {
         listProducts.add(Product.fromMap(i));
       }
@@ -32,5 +33,4 @@ class CategoryRepoImpl implements CategoryRepo {
       return Left(ServerFailure(e.toString()));
     }
   }
-  
 }

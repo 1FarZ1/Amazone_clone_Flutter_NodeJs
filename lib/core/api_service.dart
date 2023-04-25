@@ -99,24 +99,22 @@ class ApiService {
             "id": id,
           },
         ));
-      
+
     return res.data;
   }
 
-  Future getCategoryProducts({required String token,required String category}) async{
-    var res = await _dio.post('$uri/admin/delete-product?category=$category',
+  Future getCategoryProducts(
+      {required String token, required String category}) async {
+    log(category);
+    var res = await _dio.get('$uri/api/getCategoryProducts?category=$category',
         options: Options(
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
             'x-auth-token': token
           },
         ),
-        data: jsonEncode(
-          {
-            "category": category,
-          },
-        ));
-      
+        );
+
     return res.data;
   }
 }

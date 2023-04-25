@@ -29,7 +29,7 @@ class CategoryController extends StateNotifier<AsyncValue<List<Product>?>> {
     await categoryRepoImpl.fetchCategoryProducts(token : token ?? "",category: category).then((value) {
       value.fold((failure) {
         print(failure.toString());
-        state = AsyncValue.error(failure, StackTrace.empty);
+        state = AsyncValue.error(failure.errorMessage, StackTrace.empty);
       }, (products) {
         state = AsyncValue.data(products);
       });

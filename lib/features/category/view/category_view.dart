@@ -25,12 +25,14 @@ class _CategoryDealsScreenState extends ConsumerState<CategoryDealsScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 2), () {
-      if (mounted) {
-        fetchCategoryProducts();
-      }
+    // this is called after the build method is called
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      fetchCategoryProducts();
     });
   }
+
+
+
 
   fetchCategoryProducts() async {
     ref.read(categoryControllerProvider.notifier).fetchCategoryProducts(
@@ -49,6 +51,15 @@ class _CategoryDealsScreenState extends ConsumerState<CategoryDealsScreen> {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(50),
         child: AppBar(
+          leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back_ios,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              GoRouter.of(context).pop(context);
+            },
+          ),
           flexibleSpace: Container(
             decoration: const BoxDecoration(
               gradient: AppConsts.appBarGradient,
@@ -64,7 +75,23 @@ class _CategoryDealsScreenState extends ConsumerState<CategoryDealsScreen> {
       ),
       body: ref.watch(categoryControllerProvider).when(data: (productList) {
         if (productList == null) {
-          return const Text("No data");
+          return const Center(
+              child: Text(
+            "waiting for data",
+            style: TextStyle(
+              fontSize: 20,
+            ),
+          ));
+        }
+
+        if (productList.isEmpty) {
+          return const Center(
+              child: Text(
+            "No products yet",
+            style: TextStyle(
+              fontSize: 20,
+            ),
+          ));
         }
 
         return Column(
