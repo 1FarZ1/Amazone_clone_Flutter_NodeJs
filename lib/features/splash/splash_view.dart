@@ -16,7 +16,7 @@ class _SplashViewState extends ConsumerState<SplashView> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 1), () {
-      GoRouter.of(context).push("/redirect");
+      GoRouter.of(context).go("/redirect");
     });
   }
 

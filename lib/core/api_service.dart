@@ -102,4 +102,21 @@ class ApiService {
       
     return res.data;
   }
+
+  Future getCategoryProducts({required String token,required String category}) async{
+    var res = await _dio.post('$uri/admin/delete-product?category=$category',
+        options: Options(
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            'x-auth-token': token
+          },
+        ),
+        data: jsonEncode(
+          {
+            "category": category,
+          },
+        ));
+      
+    return res.data;
+  }
 }

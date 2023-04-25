@@ -1,12 +1,12 @@
 import 'package:amazon_clone/core/constant/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class TopCategories extends StatelessWidget {
   const TopCategories({Key? key}) : super(key: key);
 
   void navigateToCategoryPage(BuildContext context, String category) {
-    // Navigator.pushNamed(context, CategoryDealsScreen.routeName,
-    //     arguments: category);
+    GoRouter.of(context).push("/category", extra:category);
   }
 
   @override
