@@ -1,14 +1,15 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'account_button.dart';
 
-class TopButtons extends StatelessWidget {
+class TopButtons extends ConsumerWidget {
   const TopButtons({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context,ref) {
     return Column(
       children: [
         Row(

@@ -1,8 +1,8 @@
-import 'package:amazon_clone/core/providers/repos_provider.dart';
 import 'package:amazon_clone/features/home/controllers/home_controller.dart';
 import 'package:amazon_clone/features/product-detaills/controller/product_detaills_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/common/loader.dart';
 import '../../../../models/product.dart';
@@ -31,11 +31,15 @@ class _DealOfDayState extends ConsumerState<DealOfDay> {
 
   void navigateToDetailScreen(Product product) {
     ref.read(productDetaillsControllerProvider.notifier).setProduct(product);
+    GoRouter.of(context).push('/product-detaills');
   }
 
   @override
   Widget build(BuildContext context) {
     return ref.watch(homeControllerProvider).when(data: (product) {
+      if (product == null) {
+        return const Text("Loading");
+      }
       return product!.name.isEmpty
           ? const SizedBox()
           : GestureDetector(
@@ -78,16 +82,14 @@ class _DealOfDayState extends ConsumerState<DealOfDay> {
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: product!.images
-                          .map(
-                            (e) => Image.network(
-                              e,
-                              fit: BoxFit.fitWidth,
-                              width: 100,
-                              height: 100,
-                            ),
-                          )
-                          .toList(),
+                      children: List.generate(product.images.length, (index) {
+                        return Image.network(
+                          product.images[index],
+                          fit: BoxFit.fitHeight,
+                          height: 100,
+                          width: 100,
+                        );
+                      }),
                     ),
                   ),
                   Container(

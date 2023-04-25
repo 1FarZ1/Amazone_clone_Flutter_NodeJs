@@ -28,7 +28,7 @@ class _SearchScreenState extends ConsumerState<ConsumerStatefulWidget> {
     });
   }
 
-  fetchSearchedProduct() async {
+  fetchSearchedProduct()  {
     ref.read(searchControllerProvider.notifier).fetchSearchProducts();
   }
 

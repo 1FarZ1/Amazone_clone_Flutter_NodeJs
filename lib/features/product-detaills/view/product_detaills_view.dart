@@ -2,11 +2,13 @@ import 'package:amazon_clone/core/common/loader.dart';
 import 'package:amazon_clone/core/constant/constants.dart';
 import 'package:amazon_clone/core/providers/user_provider.dart';
 import 'package:amazon_clone/features/product-detaills/controller/product_detaills_controller.dart';
+import 'package:amazon_clone/features/search/controller/search_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/common/stars.dart';
 import '../../auth/view/login/widgets/custom_button.dart';
@@ -31,14 +33,12 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
   }
 
   void navigateToSearchScreen(String query) {
-    // Navigator.pushNamed(context, SearchScreen.routeName, arguments: query);
+    ref.read(searchControllerProvider.notifier).searchQuery = query;
+    GoRouter.of(context).push("/search");
   }
 
   void addToCart() {
-    // productDetailsServices.addToCart(
-    //   context: context,
-    //   product: widget.product,
-    // );
+    ref.read(productDetaillsControllerProvider.notifier).addToCart();
   }
 
   @override
@@ -63,7 +63,8 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                       borderRadius: BorderRadius.circular(7),
                       elevation: 1,
                       child: TextFormField(
-                        onFieldSubmitted: navigateToSearchScreen,
+                        onFieldSubmitted: (value) =>
+                            navigateToSearchScreen(value),
                         decoration: InputDecoration(
                           prefixIcon: InkWell(
                             onTap: () {},

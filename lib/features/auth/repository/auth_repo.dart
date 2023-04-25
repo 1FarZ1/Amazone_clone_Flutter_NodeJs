@@ -30,7 +30,7 @@ class AuthRepoImpl implements AuthRepo {
         password: password,
         address: "",
         type: "",
-        token: "",
+        token: "", cart: [],
       );
       var data = await apiService.signUp(data: user.toJson());
       user = User.fromMap(data);
@@ -53,7 +53,7 @@ class AuthRepoImpl implements AuthRepo {
         password: password,
         address: "",
         type: "",
-        token: "",
+        token: "", cart: [],
       );
       var data = await apiService.signIn(data: user.toJson());
       user = User.fromMap(data);

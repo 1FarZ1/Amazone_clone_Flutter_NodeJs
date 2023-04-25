@@ -2,6 +2,7 @@ import express, { json, urlencoded } from "express";
 import auth from "./routes/auth.js";
 import admin from "./routes/admin.js";
 import product from "./routes/product.js";
+import user from "./routes/user.js";
 import connectDb from "./mongoDbConnect.js";
 
 
@@ -17,6 +18,7 @@ app.use(urlencoded({extended:true}));
 app.use(auth); 
 app.use(admin);
 app.use(product)
+app.use(user)
 
 
 

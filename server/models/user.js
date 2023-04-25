@@ -1,5 +1,6 @@
 // nimportiw mongoose  we njibo mnha wch ns79
 import mongoose from "mongoose";
+import { productSchema } from "./product.js";
 
 // hna ncriyiw instance mn shema 
 const sh = mongoose.Schema;
@@ -44,9 +45,17 @@ const UserSh =new sh({
         type:String,
         default:"user",
     },
-    // cart
+    cart:[
+        {
+            product:{productSchema},
+            quantity:{
+                type:Number,
+                required:true,
+            }
+        }
+    ]
 
 })
-// we hna ndefiniw lmodel ta3na chakl we asm 
+
 const User= mongoose.model("User",UserSh);
 export default User;

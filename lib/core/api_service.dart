@@ -160,4 +160,19 @@ class ApiService {
        );
     return res.data;
   }
+  Future addToCart({required token,required productId}) async {
+    var res = await _dio.post('$uri/api/add-to-cart',
+        options: Options(
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            'x-auth-token': token
+          },
+        )
+        ,
+        data: {
+          "id":productId
+        }
+       );
+    return res.data;
+  }
 }

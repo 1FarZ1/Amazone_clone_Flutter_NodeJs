@@ -11,6 +11,7 @@ abstract class ProductDetaillsRepo {
       {required String token,
       required String productId,
       required double rating});
+  FutureEither addToCart({required String token, required String productId});
 }
 
 class ProductDetaillsRepoImpl implements ProductDetaillsRepo {
@@ -27,6 +28,24 @@ class ProductDetaillsRepoImpl implements ProductDetaillsRepo {
           token: token,
           productId: productId,
           rating: rating.toStringAsFixed(0));
+      var data = Product.fromMap(res);
+      return Right(data);
+    } on Exception catch (e) {
+      if (e is DioError) {
+        return Left(ServerFailure.fromDioError(e));
+      }
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  FutureEither addToCart(
+      {required String token, required String productId}) async {
+    try {
+      var res = await apiService.addToCart(
+        token: token,
+        productId: productId,
+      );
       var data = Product.fromMap(res);
       return Right(data);
     } on Exception catch (e) {
