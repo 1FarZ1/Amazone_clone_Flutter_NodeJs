@@ -175,4 +175,17 @@ class ApiService {
        );
     return res.data;
   }
+  Future removeFromCart({required token,required productId}) async {
+    var res = await _dio.delete('$uri/api/add-to-cart?productId=$productId',
+        options: Options(
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            'x-auth-token': token
+          },
+        )
+       );
+    return res.data;
+  }
+
+
 }

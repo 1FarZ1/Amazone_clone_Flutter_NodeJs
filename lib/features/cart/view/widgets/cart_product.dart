@@ -1,4 +1,5 @@
 import 'package:amazon_clone/core/providers/user_provider.dart';
+import 'package:amazon_clone/features/cart/controller/cart_controller.dart';
 import 'package:amazon_clone/features/product-detaills/controller/product_detaills_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -23,10 +24,7 @@ class _CartProductState extends ConsumerState<CartProduct> {
   }
 
   void decreaseQuantity(Product product) {
-    // cartServices.removeFromCart(
-    //   context: context,
-    //   product: product,
-    // );
+    ref.read(cartControllerProvider.notifier).removeFromCart(product: product);
   }
 
   @override
@@ -126,7 +124,7 @@ class _CartProductState extends ConsumerState<CartProduct> {
                     DecoratedBox(
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.black12, width: 1.5),
-                        color: Colors.white,
+                        color: Colors.black45,
                         borderRadius: BorderRadius.circular(0),
                       ),
                       child: Container(

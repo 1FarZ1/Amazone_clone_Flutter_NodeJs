@@ -1,6 +1,7 @@
 import 'package:amazon_clone/core/providers/api_service_provider.dart';
 import 'package:amazon_clone/features/add_product/repo/add_product_repo.dart';
 import 'package:amazon_clone/features/auth/repository/auth_repo.dart';
+import 'package:amazon_clone/features/cart/repo/cart_repo.dart';
 import 'package:amazon_clone/features/category/repo/category_repo.dart';
 import 'package:amazon_clone/features/home/repo/home_repo.dart';
 import 'package:amazon_clone/features/posts/repo/posts_repo.dart';
@@ -28,4 +29,7 @@ final productDetaillsRepoProvider = Provider<ProductDetaillsRepoImpl>((ref) {
 });
 final homeRepoProvider = Provider<HomeRepoImpl>((ref) {
   return HomeRepoImpl(apiService: ref.read(apiServiceProvider));
+});
+final cartRepoProvider = Provider<CartRepoImpl>((ref) {
+  return CartRepoImpl(apiService: ref.read(apiServiceProvider));
 });
