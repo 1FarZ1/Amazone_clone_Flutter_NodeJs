@@ -2,17 +2,15 @@ import 'package:amazon_clone/core/constant/constants.dart';
 import 'package:amazon_clone/features/search/controller/search_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/common/loader.dart';
-import '../../../models/product.dart';
 import '../../home/view/widgets/address_box.dart';
 import 'widget/searched_product.dart';
 
 class SearchView extends ConsumerStatefulWidget {
-  final String searchQuery;
   const SearchView({
-    Key? key,
-    required this.searchQuery,
+    Key? key,  
   }) : super(key: key);
 
   @override
@@ -20,21 +18,22 @@ class SearchView extends ConsumerStatefulWidget {
 }
 
 class _SearchScreenState extends ConsumerState<ConsumerStatefulWidget> {
-
   @override
   void initState() {
     super.initState();
-    fetchSearchedProduct();
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      fetchSearchedProduct();
+    });
   }
 
   fetchSearchedProduct() async {
-    // products = await searchServices.fetchSearchedProduct(
-    //     context: context, searchQuery: widget.searchQuery);
-    // setState(() {});
+    ref
+        .read(searchControllerProvider.notifier)
+        .fetchSearchProducts();
   }
 
   void navigateToSearchScreen(String query) {
-    // Navigator.pushNamed(context, SearchScreen.routeName, arguments: query);
+    GoRouter.of(context).push("/search" );
   }
 
   @override
@@ -59,10 +58,14 @@ class _SearchScreenState extends ConsumerState<ConsumerStatefulWidget> {
                       borderRadius: BorderRadius.circular(7),
                       elevation: 1,
                       child: TextFormField(
-                        onFieldSubmitted: navigateToSearchScreen,
+                        onFieldSubmitted: (val){
+                              ref.read(searchControllerProvider.notifier).searchQuery = val;
+                              navigateToSearchScreen(val);
+                        },
                         decoration: InputDecoration(
                           prefixIcon: InkWell(
-                            onTap: () {},
+                            onTap: () {
+                            },
                             child: const Padding(
                               padding: EdgeInsets.only(
                                 left: 6,
@@ -113,44 +116,45 @@ class _SearchScreenState extends ConsumerState<ConsumerStatefulWidget> {
           ),
         ),
         body: ref.watch(searchControllerProvider).when(
-            data: (productList) {
-              if (productList == null) {
-                return const Center(child: Text(' looking for data'));
-              }
-              if (productList.isEmpty) {
-                return const Center(child: Text('No data found'));
-              }
-              return Column(
-                children: [
-                  const AddressBox(),
-                  const SizedBox(height: 10),
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: productList!.length,
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: () {
-                            // Navigator.pushNamed(
-                            //   context,
-                            //   // ProductDetailScreen.routeName,
-                            //   arguments: products![index],
-                            // );
-                          },
-                          child: SearchedProduct(
-                            product: productList![index],
-                          ),
-                        );
-                      },
-                    ),
+          data: (productList) {
+            if (productList == null) {
+              return const Center(child: Text(' looking for data'));
+            }
+            if (productList.isEmpty) {
+              return const Center(child: Text('No data found'));
+            }
+            return Column(
+              children: [
+                const AddressBox(),
+                const SizedBox(height: 10),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: productList!.length,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {
+                          // Navigator.pushNamed(
+                          //   context,
+                          //   // ProductDetailScreen.routeName,
+                          //   arguments: products![index],
+                          // );
+                        },
+                        child: SearchedProduct(
+                          product: productList![index],
+                        ),
+                      );
+                    },
                   ),
-                ],
-              );  
-            },
-            error:(error, stackTrace) {
-              return Center(child: Text(error.toString()));
-            },
-            loading:() {
-              return const Center(child: Loader());
-            },));
+                ),
+              ],
+            );
+          },
+          error: (error, stackTrace) {
+            return Center(child: Text(error.toString()));
+          },
+          loading: () {
+            return const Center(child: Loader());
+          },
+        ));
   }
 }

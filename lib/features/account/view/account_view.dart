@@ -1,8 +1,5 @@
-import 'package:amazon_clone/core/constant/constants.dart';
 import 'package:flutter/material.dart';
 
-import '../../../core/common/loader.dart';
-import '../../../models/order.dart';
 import 'widgets/below_app_bar.dart';
 import 'widgets/custom_app_bar.dart';
 import 'widgets/orders.dart';

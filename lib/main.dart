@@ -92,8 +92,7 @@ class _MyAppState extends ConsumerState<MyApp> {
             path: "/search",
 
             builder: (context, state) {
-              return  SearchView(
-                searchQuery: state.extra as String,
+              return  const SearchView(
               );
             }),
       ]),

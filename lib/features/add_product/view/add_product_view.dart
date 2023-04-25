@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:amazon_clone/core/constant/constants.dart';
@@ -131,13 +130,13 @@ class _AddProductScreenState extends ConsumerState<AddProductScreen> {
         } else {
           return Text(
             data.toString(),
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
           );
         }
       }, error: (error, stackTrace) {
         return Text(
           "Something went Wrong $error",
-          style: TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white),
         );
       }, loading: () {
         return const CircularProgressIndicator();

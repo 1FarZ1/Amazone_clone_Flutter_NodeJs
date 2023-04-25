@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/constant/constants.dart';
+import '../../../search/controller/search_controller.dart';
 
-class CustomAppBarHome extends StatelessWidget with PreferredSizeWidget {
+class CustomAppBarHome extends ConsumerWidget with PreferredSizeWidget {
   const CustomAppBarHome({super.key});
   void navigateToSearchScreen(ctx, String val) {
-    GoRouter.of(ctx).push("/search", extra: val);
+    GoRouter.of(ctx).push("/search");
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     return AppBar(
       leading: null,
       flexibleSpace: Container(
@@ -30,9 +32,13 @@ class CustomAppBarHome extends StatelessWidget with PreferredSizeWidget {
                 elevation: 1,
                 child: TextFormField(
                   onFieldSubmitted: (val) {
+                    ref.read(searchControllerProvider.notifier).searchQuery =
+                        val;
+
                     navigateToSearchScreen(context, val);
                   },
                   decoration: InputDecoration(
+                  
                     prefixIcon: InkWell(
                       onTap: () {},
                       child: const Padding(
@@ -46,6 +52,7 @@ class CustomAppBarHome extends StatelessWidget with PreferredSizeWidget {
                         ),
                       ),
                     ),
+  
                     filled: true,
                     fillColor: Colors.white,
                     contentPadding: const EdgeInsets.only(top: 10),
@@ -64,6 +71,7 @@ class CustomAppBarHome extends StatelessWidget with PreferredSizeWidget {
                         width: 1,
                       ),
                     ),
+                    
                     hintText: 'Search Amazon.in',
                     hintStyle: const TextStyle(
                       color: Colors.black38,

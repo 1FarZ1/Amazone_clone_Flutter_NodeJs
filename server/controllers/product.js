@@ -16,8 +16,8 @@ let getSearchProducts = async (req, res) => {
     try {  
         // change it to title
 
-        const category = req.query.searchQuery;
-        const products = await Product.find({category:category});
+        const searchQuery = req.query.searchQuery;
+        const products = await Product.find({name:{$regex:searchQuery,$options:"$i"}});
 
 
         return res.status(200).json({msg:"All Products of That Seach Query are  : " + searchQuery,products:products});

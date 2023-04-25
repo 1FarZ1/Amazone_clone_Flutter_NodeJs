@@ -7,8 +7,6 @@ import 'package:amazon_clone/core/utils/custom_snack_bar.dart';
 import 'package:amazon_clone/features/auth/repository/auth_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 final authControllerProvider =
     StateNotifierProvider<AuthController, AsyncValue>((ref) {
@@ -63,7 +61,7 @@ class AuthController extends StateNotifier<AsyncValue> {
 
   Future<void> getUserData() async {
     log("============================GET USER DATA CALLED=====================================");
-    var token;
+    String? token;
 
     ref.watch(sharedPreferenceProvider)?.then((pref) async {
       token = pref.getString("x-auth-token");
