@@ -13,7 +13,6 @@ import 'package:go_router/go_router.dart';
 
 import 'features/auth/view/login/login_view.dart';
 import 'features/splash/splash_view.dart';
-import 'models/user.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -49,11 +48,14 @@ class _MyAppState extends ConsumerState<MyApp> {
         GoRoute(
           path: "/redirect",
           redirect: (context, state) {
-            var user = ref.watch(userStateProvider);
-            if (user.equals(User.Empty())) {
+            var user = ref.watch(userStateProvider.notifier
+                .select((value) => value.isUserLoggedIn()));
+            var typeUser =
+                ref.watch(userStateProvider.select((value) => value.type));
+            if (!user) {
               return "/login";
             } else {
-              if (user.type == "admin") {
+              if (typeUser == "admin") {
                 return "/admin";
               } else {
                 return "/home";

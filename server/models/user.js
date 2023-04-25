@@ -45,15 +45,15 @@ const UserSh =new sh({
         type:String,
         default:"user",
     },
-    cart:[
+    cart: [
         {
-            product:{productSchema},
-            quantity:{
-                type:Number,
-                required:true,
-            }
-        }
-    ]
+          product: productSchema,
+          quantity: {
+            type: Number,
+            required: true,
+          },
+        },
+      ],
 
 })
 

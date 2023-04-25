@@ -23,6 +23,5 @@ class UserSt extends StateNotifier<User> {
     return state != User.Empty();
   }
 
-  // ovveride the  == 
  
 }

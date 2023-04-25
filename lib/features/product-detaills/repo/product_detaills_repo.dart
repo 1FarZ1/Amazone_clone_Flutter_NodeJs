@@ -5,6 +5,7 @@ import '../../../core/api_service.dart';
 import '../../../core/errors/failire.dart';
 import '../../../core/utils/type_def.dart';
 import '../../../models/product.dart';
+import '../../../models/user.dart';
 
 abstract class ProductDetaillsRepo {
   FutureEither<Product> rateProduct(
@@ -46,7 +47,7 @@ class ProductDetaillsRepoImpl implements ProductDetaillsRepo {
         token: token,
         productId: productId,
       );
-      var data = Product.fromMap(res);
+      var data= User.fromMap(res);
       return Right(data);
     } on Exception catch (e) {
       if (e is DioError) {

@@ -1,5 +1,6 @@
 import 'package:amazon_clone/core/providers/repos_provider.dart';
 import 'package:amazon_clone/core/providers/shared_preference_provider.dart';
+import 'package:amazon_clone/core/providers/user_provider.dart';
 import 'package:amazon_clone/features/product-detaills/repo/product_detaills_repo.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -38,8 +39,10 @@ class ProductDetaillsController extends StateNotifier<AsyncValue<Product?>> {
       state = AsyncValue.data(r);
     });
   }
+
   void addToCart() async {
-    var temp = state.value!.id;
+    var tmp = state.value;
+    var temp = tmp!.id;
     state = const AsyncLoading<Product>();
     String? token;
     await ref.watch(sharedPreferenceProvider)?.then((pref) async {
@@ -48,17 +51,15 @@ class ProductDetaillsController extends StateNotifier<AsyncValue<Product?>> {
     var res = await productDetaillsRepoImpl.addToCart(
       productId: temp ?? "",
       token: token ?? "",
-
     );
 
     res.fold((l) {
       state = AsyncValue.error(l.errorMessage, StackTrace.empty);
     }, (r) {
-      state = AsyncValue.data(r);
+      ref.read(userStateProvider.notifier).setUser(r);
+      state = AsyncValue.data(tmp);
     });
   }
-
-
 
   void setProduct(Product product) {
     state = AsyncValue.data(product);

@@ -50,7 +50,7 @@ class User {
       ),
     );
   }
-  factory User.Empty(){
+  factory User.Empty() {
     return User(
       id: '',
       name: '',
@@ -88,12 +88,13 @@ class User {
       cart: cart ?? this.cart,
     );
   }
-   @override
+
   bool equals(User other) {
-    if(this.email == other.email && this.password == other.password){
+    if (email == other.email && password == other.password) {
       return true;
     }
     return false;
-   
   }
+
+ 
 }
