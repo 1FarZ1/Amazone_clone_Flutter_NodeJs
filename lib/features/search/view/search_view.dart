@@ -40,6 +40,15 @@ class _SearchScreenState extends ConsumerState<ConsumerStatefulWidget> {
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(60),
           child: AppBar(
+            leading: IconButton(
+              onPressed: () {
+                GoRouter.of(context).pushReplacement("/home");
+              },
+              icon: const Icon(
+                Icons.arrow_back,
+                color: Colors.black,
+              ),
+            ),
             flexibleSpace: Container(
               decoration: const BoxDecoration(
                 gradient: AppConsts.appBarGradient,
@@ -132,11 +141,7 @@ class _SearchScreenState extends ConsumerState<ConsumerStatefulWidget> {
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         onTap: () {
-                          // Navigator.pushNamed(
-                          //   context,
-                          //   // ProductDetailScreen.routeName,
-                          //   arguments: products![index],
-                          // );
+                          GoRouter.of(context).push("/product-detaills",extra: productList[index]);
                         },
                         child: SearchedProduct(
                           product: productList[index],
