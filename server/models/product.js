@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import ratingSchema from "./rating.js";
 
 const productSchema = mongoose.Schema({
   name: {
@@ -29,7 +30,7 @@ const productSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-//   ratings: [ratingSchema],
+  ratings: [ratingSchema],
 });
 
 const Product = mongoose.model("Product", productSchema);

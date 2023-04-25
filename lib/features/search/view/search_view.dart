@@ -10,7 +10,7 @@ import 'widget/searched_product.dart';
 
 class SearchView extends ConsumerStatefulWidget {
   const SearchView({
-    Key? key,  
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -21,19 +21,17 @@ class _SearchScreenState extends ConsumerState<ConsumerStatefulWidget> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       fetchSearchedProduct();
     });
   }
 
   fetchSearchedProduct() async {
-    ref
-        .read(searchControllerProvider.notifier)
-        .fetchSearchProducts();
+    ref.read(searchControllerProvider.notifier).fetchSearchProducts();
   }
 
   void navigateToSearchScreen(String query) {
-    GoRouter.of(context).push("/search" );
+    GoRouter.of(context).push("/search");
   }
 
   @override
@@ -58,14 +56,15 @@ class _SearchScreenState extends ConsumerState<ConsumerStatefulWidget> {
                       borderRadius: BorderRadius.circular(7),
                       elevation: 1,
                       child: TextFormField(
-                        onFieldSubmitted: (val){
-                              ref.read(searchControllerProvider.notifier).searchQuery = val;
-                              navigateToSearchScreen(val);
+                        onFieldSubmitted: (val) {
+                          ref
+                              .read(searchControllerProvider.notifier)
+                              .searchQuery = val;
+                          navigateToSearchScreen(val);
                         },
                         decoration: InputDecoration(
                           prefixIcon: InkWell(
-                            onTap: () {
-                            },
+                            onTap: () {},
                             child: const Padding(
                               padding: EdgeInsets.only(
                                 left: 6,
@@ -129,7 +128,7 @@ class _SearchScreenState extends ConsumerState<ConsumerStatefulWidget> {
                 const SizedBox(height: 10),
                 Expanded(
                   child: ListView.builder(
-                    itemCount: productList!.length,
+                    itemCount: productList.length,
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         onTap: () {
@@ -140,7 +139,7 @@ class _SearchScreenState extends ConsumerState<ConsumerStatefulWidget> {
                           // );
                         },
                         child: SearchedProduct(
-                          product: productList![index],
+                          product: productList[index],
                         ),
                       );
                     },

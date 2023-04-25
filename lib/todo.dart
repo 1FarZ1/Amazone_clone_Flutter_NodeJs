@@ -1,0 +1,1 @@
+// add rating to the product

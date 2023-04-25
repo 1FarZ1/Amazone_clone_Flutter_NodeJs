@@ -106,7 +106,7 @@ class ApiService {
   Future getCategoryProducts(
       {required String token, required String category}) async {
     log(category);
-    var res = await _dio.get('$uri/api/getCategoryProducts?category=$category',
+    var res = await _dio.get('$uri/api/products/getCategoryProducts?category=$category',
         options: Options(
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
@@ -126,6 +126,24 @@ class ApiService {
             'x-auth-token': token
           },
         ),
+        );
+
+    return res.data;
+  }
+  Future rateProduct({required token , required productId , required rating})async{
+    var res = await _dio.post('$uri/api/products/rateProduct',
+        options: Options(
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            'x-auth-token': token
+          },
+        ),
+        data: jsonEncode(
+          {
+            "productId": productId,
+            "rating": rating
+          },
+        )
         );
 
     return res.data;
