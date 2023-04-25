@@ -117,4 +117,17 @@ class ApiService {
 
     return res.data;
   }
+
+  Future getSearchProducts({required token , required String searchQuery})async{
+    var res = await _dio.get('$uri/api/products/getSearchProducts?searchQuery=$searchQuery',
+        options: Options(
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            'x-auth-token': token
+          },
+        ),
+        );
+
+    return res.data;
+  }
 }

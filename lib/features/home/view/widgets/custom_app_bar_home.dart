@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/constant/constants.dart';
 
 class CustomAppBarHome extends StatelessWidget with PreferredSizeWidget {
   const CustomAppBarHome({super.key});
+  void navigateToSearchScreen(ctx, String val) {
+    GoRouter.of(ctx).push("/search", extra: val);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +29,9 @@ class CustomAppBarHome extends StatelessWidget with PreferredSizeWidget {
                 borderRadius: BorderRadius.circular(7),
                 elevation: 1,
                 child: TextFormField(
-                  // onFieldSubmitted: navigateToSearchScreen,
+                  onFieldSubmitted: (val) {
+                    navigateToSearchScreen(context, val);
+                  },
                   decoration: InputDecoration(
                     prefixIcon: InkWell(
                       onTap: () {},

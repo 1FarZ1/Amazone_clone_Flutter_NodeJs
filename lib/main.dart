@@ -4,6 +4,7 @@ import 'package:amazon_clone/features/add_product/view/add_product_view.dart';
 import 'package:amazon_clone/features/admin/view/admin_view.dart';
 import 'package:amazon_clone/features/auth/controller/auth_controller.dart';
 import 'package:amazon_clone/features/category/view/category_view.dart';
+import 'package:amazon_clone/features/search/view/search_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -85,6 +86,14 @@ class _MyAppState extends ConsumerState<MyApp> {
             builder: (context, state) {
               return  CategoryDealsScreen(
                 category: state.extra as String,
+              );
+            }),
+        GoRoute(
+            path: "/search",
+
+            builder: (context, state) {
+              return  SearchView(
+                searchQuery: state.extra as String,
               );
             }),
       ]),

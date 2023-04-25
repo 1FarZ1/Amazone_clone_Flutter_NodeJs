@@ -12,8 +12,21 @@ let getCategoryProducts = async (req, res) => {
             return res.status(400).json({msg:"error happend " + error.message});
     }
 }
+let getSearchProducts = async (req, res) => {
+    try {  
+        // change it to title
+
+        const category = req.query.searchQuery;
+        const products = await Product.find({category:category});
+
+
+        return res.status(200).json({msg:"All Products of That Seach Query are  : " + searchQuery,products:products});
+    } catch (error) {
+            return res.status(400).json({msg:"error happend " + error.message});
+    }
+}
 
 
 
 
-export {getCategoryProducts}
+export {getCategoryProducts,getSearchProducts}
