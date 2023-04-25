@@ -1,23 +1,16 @@
-import 'dart:developer';
-
 import 'package:amazon_clone/core/providers/user_provider.dart';
 import 'package:amazon_clone/core/theme/theme.dart';
-import 'package:amazon_clone/features/account/view/account_view.dart';
 import 'package:amazon_clone/features/add_product/view/add_product_view.dart';
+import 'package:amazon_clone/features/admin/view/admin_view.dart';
 import 'package:amazon_clone/features/auth/controller/auth_controller.dart';
-import 'package:amazon_clone/features/posts/view/posts_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import 'core/route_config.dart';
-import 'features/admin/view/admin_view.dart';
 import 'features/auth/view/login/login_view.dart';
 import 'features/home/view/home_view.dart';
 import 'features/splash/splash_view.dart';
 import 'models/user.dart';
-
-// use ref here
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,9 +20,9 @@ void main() async {
     return ref.read(authControllerProvider.notifier).getUserData();
   }
 
-  final authState = await getData(container);
+  await getData(container);
 
-  runApp(UncontrolledProviderScope(container: container, child: MyApp()));
+  runApp(UncontrolledProviderScope(container: container, child: const MyApp()));
 }
 
 class MyApp extends ConsumerStatefulWidget {
@@ -53,10 +46,11 @@ class _MyAppState extends ConsumerState<MyApp> {
         GoRoute(
           path: "/redirect",
           redirect: (context, state) {
-            if (ref.watch(userStateProvider).equals(User.Empty())) {
+            var user = ref.watch(userStateProvider);
+            if (user.equals(User.Empty())) {
               return "/login";
             } else {
-              if (ref.watch(userStateProvider).type == "admin") {
+              if (user.type == "admin") {
                 return "/admin";
               } else {
                 return "/home";
@@ -75,14 +69,14 @@ class _MyAppState extends ConsumerState<MyApp> {
               return const HomeView();
             }),
         GoRoute(
-            path: "/account",
-            builder: (context, state) {
-              return const AccountView();
-            }),
-        GoRoute(
             path: "/admin",
             builder: (context, state) {
-              return const PostsScreen();
+              return const AdminView();
+            }),
+        GoRoute(
+            path: "/add-product",
+            builder: (context, state) {
+              return const AddProductScreen();
             }),
       ]),
       theme: AppTheme.customTheme,

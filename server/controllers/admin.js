@@ -31,9 +31,8 @@ let allProducts = async (req, res) => {
 let deleteProduct = async (req,res)=>{
     try {
             const {id} = req.body;
-            console.log(id);
-
-            let products= await Product.findByIdAndDelete(id);
+            await Product.findByIdAndDelete(id);
+            const products = await Product.find({});
             return res.status(200).json({msg:"Product Deleted Successfully",products:products});
     } catch (error) {
             console.log(error);

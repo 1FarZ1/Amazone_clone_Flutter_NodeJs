@@ -6,7 +6,7 @@ import 'package:dio/dio.dart';
 
 import '../models/product.dart';
 
-const uri = 'http://192.168.1.34:8001';
+const uri = 'http://192.168.43.176:8001';
 
 class ApiService {
   final Dio _dio = Dio(
@@ -38,12 +38,14 @@ class ApiService {
 
   Future isValid({required token}) async {
     log("token : $token");
-    var tokenRes = await _dio.post('$uri/api/tokenIsValid',
+    Response tokenRes = await _dio.post('$uri/api/tokenIsValid',
         options: Options(
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
-            'x-auth-token': token ?? ""
+            'x-auth-token': token ?? "",
           },
+          sendTimeout: const Duration(seconds: 10),
+          receiveTimeout: const Duration(seconds: 10),
         ));
     return tokenRes.data;
   }
@@ -84,7 +86,7 @@ class ApiService {
     return res.data;
   }
 
-  Future deletePost({required token, required id}) async {
+  Future deletePost({required token, required String id}) async {
     var res = await _dio.post('$uri/admin/delete-product',
         options: Options(
           headers: <String, String>{
@@ -92,7 +94,12 @@ class ApiService {
             'x-auth-token': token
           },
         ),
-        data: {id: id});
+        data: jsonEncode(
+          {
+            "id": id,
+          },
+        ));
+      
     return res.data;
   }
 }

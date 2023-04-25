@@ -78,8 +78,12 @@ class AuthRepoImpl implements AuthRepo {
         var user = User.fromMap(data);
         return Right(user);
       }
+      log(
+        "token not valid",
+      );
       return Left(ServerFailure("User not found"));
     } on Exception catch (e) {
+
       if (e is DioError) {
         return Left(ServerFailure.fromDioError(e));
       }

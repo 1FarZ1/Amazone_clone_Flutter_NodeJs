@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 
 const auth = async (req, res, next) => {
     try {
+        console.log("auth middlewar trigged");
         const token  = req.header("x-auth-token");
         if(!token){
             return res.status(401).json({msg:"No Authentication Token, Authorization Denied"});

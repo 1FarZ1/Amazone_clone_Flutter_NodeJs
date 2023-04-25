@@ -33,7 +33,7 @@ class _PostsScreenState extends ConsumerState<PostsScreen> {
   }
 
   void navigateToAddProduct() {
-    GoRouter.of(context).go("/add_product");
+    GoRouter.of(context).push("/add-product");
   }
 
   @override

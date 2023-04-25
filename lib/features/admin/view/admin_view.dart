@@ -1,4 +1,5 @@
-import 'package:amazon_clone/features/admin/view/widgets/custom_app_bar_admin.dart';
+import 'package:amazon_clone/core/common/bottom_bar.dart';
+import 'package:amazon_clone/features/posts/view/posts_view.dart';
 import 'package:flutter/material.dart';
 
 class AdminView extends StatelessWidget {
@@ -6,11 +7,14 @@ class AdminView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      appBar: CustomAppBarAdmin(),
-      body: Center(
-        child: Text("admin Screen"),
-      ),
+    return const BottomBar(
+      paramPages: [
+        Center(
+          child: Text("Admin Screen"),
+        ),
+        PostsScreen(),
+        Center(child: Text("random Widget"))
+      ],
     );
   }
 }
