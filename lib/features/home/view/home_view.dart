@@ -1,8 +1,6 @@
 import 'package:amazon_clone/features/home/view/widgets/custom_app_bar_home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../core/providers/user_provider.dart';
 import 'widgets/address_box.dart';
 import 'widgets/carousel_image.dart';
 import 'widgets/deal_of_day.dart';
@@ -13,8 +11,7 @@ class HomeView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.watch(userStateProvider);
-    return Scaffold(
+        return Scaffold(
       appBar: const CustomAppBarHome(),
       body: SingleChildScrollView(
         child: Column(

@@ -2,6 +2,7 @@ import 'package:amazon_clone/core/providers/api_service_provider.dart';
 import 'package:amazon_clone/features/add_product/repo/add_product_repo.dart';
 import 'package:amazon_clone/features/auth/repository/auth_repo.dart';
 import 'package:amazon_clone/features/category/repo/category_repo.dart';
+import 'package:amazon_clone/features/home/repo/home_repo.dart';
 import 'package:amazon_clone/features/posts/repo/posts_repo.dart';
 import 'package:amazon_clone/features/product-detaills/repo/product_detaills_repo.dart';
 import 'package:amazon_clone/features/search/repo/search_repo.dart';
@@ -24,4 +25,7 @@ final searchRepoProvider = Provider<SearchRepoImpl>((ref) {
 });
 final productDetaillsRepoProvider = Provider<ProductDetaillsRepoImpl>((ref) {
   return ProductDetaillsRepoImpl(apiService: ref.read(apiServiceProvider));
+});
+final homeRepoProvider = Provider<HomeRepoImpl>((ref) {
+  return HomeRepoImpl(apiService: ref.read(apiServiceProvider));
 });
