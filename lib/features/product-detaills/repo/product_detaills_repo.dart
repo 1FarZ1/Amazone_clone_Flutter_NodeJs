@@ -1,13 +1,16 @@
-import 'package:amazon_clone/models/product.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
 import '../../../core/api_service.dart';
 import '../../../core/errors/failire.dart';
 import '../../../core/utils/type_def.dart';
+import '../../../models/product.dart';
 
 abstract class ProductDetaillsRepo {
-  FutureEither rateProduct({required String token, required String productId,required double rating});
+  FutureEither<Product> rateProduct(
+      {required String token,
+      required String productId,
+      required double rating});
 }
 
 class ProductDetaillsRepoImpl implements ProductDetaillsRepo {
@@ -15,10 +18,17 @@ class ProductDetaillsRepoImpl implements ProductDetaillsRepo {
   final ApiService apiService;
 
   @override
-  FutureEither rateProduct({required String token, required String productId,required double rating}) async {
+  FutureEither<Product> rateProduct(
+      {required String token,
+      required String productId,
+      required double rating}) async {
     try {
-      var res = await apiService.rateProduct(token: token, productId: productId, rating: rating);
-      return Right(res);
+      var res = await apiService.rateProduct(
+          token: token,
+          productId: productId,
+          rating: rating.toStringAsFixed(0));
+      var data = Product.fromMap(res);
+      return Right(data);
     } on Exception catch (e) {
       if (e is DioError) {
         return Left(ServerFailure.fromDioError(e));
@@ -26,6 +36,4 @@ class ProductDetaillsRepoImpl implements ProductDetaillsRepo {
       return Left(ServerFailure(e.toString()));
     }
   }
-
-  
 }

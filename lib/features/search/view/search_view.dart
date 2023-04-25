@@ -5,7 +5,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/common/loader.dart';
+import '../../../models/product.dart';
 import '../../home/view/widgets/address_box.dart';
+import '../../product-detaills/controller/product_detaills_controller.dart';
 import 'widget/searched_product.dart';
 
 class SearchView extends ConsumerStatefulWidget {
@@ -140,8 +142,9 @@ class _SearchScreenState extends ConsumerState<ConsumerStatefulWidget> {
                     itemCount: productList.length,
                     itemBuilder: (context, index) {
                       return GestureDetector(
-                        onTap: () {
-                          GoRouter.of(context).push("/product-detaills",extra: productList[index]);
+                        onTap: () async{
+                             ref.read(productDetaillsControllerProvider.notifier).setProduct(productList[index]);
+                             GoRouter.of(context).push("/product-detaills");
                         },
                         child: SearchedProduct(
                           product: productList[index],

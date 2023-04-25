@@ -26,6 +26,7 @@ let getSearchProducts = async (req, res) => {
 }
 let rateProduct =  async (req, res) => {
     try {
+        console.log(req.body);
       const { id, rating } = req.body;
       let product = await Product.findById(id);
   

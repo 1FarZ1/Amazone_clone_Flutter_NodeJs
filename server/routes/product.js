@@ -11,4 +11,5 @@ productRouter.get(domaineName +  "/getSearchProducts",auth,getSearchProducts);
 productRouter.post(domaineName+ "/rate-product", auth,rateProduct);
 
 
+
 export default productRouter;

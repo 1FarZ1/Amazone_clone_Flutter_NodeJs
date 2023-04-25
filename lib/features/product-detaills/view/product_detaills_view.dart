@@ -43,7 +43,6 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    AsyncValue product = ref.watch(productDetaillsControllerProvider);
     return Scaffold(
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(60),
@@ -117,7 +116,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
             ),
           ),
         ),
-        body: product.when(
+        body: ref.watch(productDetaillsControllerProvider).when(
           data: (product) {
             if (product == null) {
               return const Center(child: CircularProgressIndicator());
@@ -157,30 +156,30 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                     ),
                     child: Text(
                       product.name,
+                      textAlign: TextAlign.center,
                       style: const TextStyle(
-                        fontSize: 15,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: CarouselSlider(
+                      items: List.generate(product.images.length, (index) {
+                        return Image.network(
+                          product.images[index],
+                          fit: BoxFit.cover,
+                        );
+                      }),
+                      options: CarouselOptions(
+                        viewportFraction: 1,
+                        height: 250,
                       ),
                     ),
                   ),
-                  CarouselSlider(
-                    items: product.images.map(
-                      (i) {
-                        return Builder(
-                          builder: (BuildContext context) => Image.network(
-                            i,
-                            fit: BoxFit.contain,
-                            height: 200,
-                          ),
-                        );
-                      },
-                    ).toList(),
-                    options: CarouselOptions(
-                      viewportFraction: 1,
-                      height: 300,
-                    ),
-                  ),
                   Container(
-                    color: Colors.black12,
+                    color: Colors.white,
                     height: 5,
                   ),
                   Padding(
@@ -190,15 +189,15 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                         text: 'Deal Price: ',
                         style: const TextStyle(
                           fontSize: 16,
-                          color: Colors.black,
+                          color: Colors.white,
                           fontWeight: FontWeight.bold,
                         ),
                         children: [
                           TextSpan(
                             text: '\$${product.price}',
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 22,
-                              color: Colors.red,
+                              color: Colors.yellow[400],
                               fontWeight: FontWeight.w500,
                             ),
                           ),
@@ -208,10 +207,14 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text(product.description),
+                    child: Text(product.description,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                        )),
                   ),
                   Container(
-                    color: Colors.black12,
+                    color: Colors.white,
                     height: 5,
                   ),
                   Padding(
@@ -232,7 +235,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                   ),
                   const SizedBox(height: 10),
                   Container(
-                    color: Colors.black12,
+                    color: Colors.white,
                     height: 5,
                   ),
                   const Padding(

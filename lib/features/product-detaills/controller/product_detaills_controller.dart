@@ -21,13 +21,14 @@ class ProductDetaillsController extends StateNotifier<AsyncValue<Product?>> {
   final StateNotifierProviderRef ref;
 
   void rateProduct({required double rating}) async {
+    var temp = state.value!.id;
     state = const AsyncLoading<Product>();
     String? token;
     await ref.watch(sharedPreferenceProvider)?.then((pref) async {
       token = pref.getString("x-auth-token");
     });
     var res = await productDetaillsRepoImpl.rateProduct(
-      productId: state.value!.id ?? "",
+      productId: temp ?? "",
       token: token ?? "",
       rating: rating,
     );
@@ -42,6 +43,4 @@ class ProductDetaillsController extends StateNotifier<AsyncValue<Product?>> {
   void setProduct(Product product) {
     state = AsyncValue.data(product);
   }
-
-  }
-
+}

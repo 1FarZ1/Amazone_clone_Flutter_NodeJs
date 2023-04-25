@@ -98,7 +98,6 @@ class _MyAppState extends ConsumerState<MyApp> {
         GoRoute(
             path: "/product-detaills",
             builder: (context, state) {
-              ref.read(productDetaillsControllerProvider.notifier).setProduct(state.extra as Product);
               return const ProductDetailScreen();
             }),
       ]),
