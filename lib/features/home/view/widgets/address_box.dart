@@ -1,11 +1,14 @@
 import 'package:amazon_clone/core/constant/constants.dart';
+import 'package:amazon_clone/core/providers/user_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AddressBox extends StatelessWidget {
+class AddressBox extends ConsumerWidget {
   const AddressBox({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
+    var user = ref.watch(userStateProvider);
     return Container(
       height: 40,
       decoration: const BoxDecoration(
@@ -19,18 +22,18 @@ class AddressBox extends StatelessWidget {
       ),
       padding: const EdgeInsets.only(left: 10),
       child: Row(
-        children: const [
-          Icon(
+        children: [
+          const Icon(
             Icons.location_on_outlined,
             size: 20,
             color: Colors.black54,
           ),
           Expanded(
             child: Padding(
-              padding: EdgeInsets.only(left: 5),
+              padding: const EdgeInsets.only(left: 5),
               child: Text(
-                'Delivery to temp - temp',
-                style: TextStyle(
+                'Delivery to ${user.address}',
+                style: const TextStyle(
                   fontWeight: FontWeight.w500,
                   color: Colors.black54,
                 ),
@@ -38,7 +41,7 @@ class AddressBox extends StatelessWidget {
               ),
             ),
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.only(
               left: 5,
               top: 2,
