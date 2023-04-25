@@ -55,5 +55,52 @@ let removeFromCart = async (req, res) => {
         res.status(500).json({ error: e.message });
       }
   }
+ let saveUserAdress =  async (req, res) => {
+    try {
+      const { address } = req.body;
+      let user = await User.findById(req.user);
+      user.address = address;
+      user = await user.save();
+      res.json(user);
+    } catch (e) {
+      res.status(500).json({ error: e.message });
+    }
+  }
 
-export {addToCart,removeFromCart}
+let placeOrder = async (req, res) => {
+    try {
+      const { cart, totalPrice, address } = req.body;
+      let products = [];
+  
+      for (let i = 0; i < cart.length; i++) {
+        let product = await Product.findById(cart[i].product._id);
+        if (product.quantity >= cart[i].quantity) {
+          product.quantity -= cart[i].quantity;
+          products.push({ product, quantity: cart[i].quantity });
+          await product.save();
+        } else {
+          return res
+            .status(400)
+            .json({ msg: `${product.name} is out of stock!` });
+        }
+      }
+  
+      let user = await User.findById(req.user);
+      user.cart = [];
+      user = await user.save();
+  
+      let order = new Order({
+        products,
+        totalPrice,
+        address,
+        userId: req.user,
+        orderedAt: new Date().getTime(),
+      });
+      order = await order.save();
+      res.json(order);
+    } catch (e) {
+      res.status(500).json({ error: e.message });
+    }
+  }
+
+export {addToCart,removeFromCart,saveUserAdress,placeOrder}

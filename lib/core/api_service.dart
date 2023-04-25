@@ -185,4 +185,35 @@ class ApiService {
             ));
     return res.data;
   }
+  Future saveUserAdress({required token, required adress}) async {
+    var res =
+        await _dio.post('$uri/api/save-user-adress',
+            options: Options(
+              headers: <String, String>{
+                'Content-Type': 'application/json; charset=UTF-8',
+                'x-auth-token': token
+              },
+            )
+            ,data: {
+            "address":adress
+            }
+            );
+    return res.data;
+  }
+  Future placeOrder({required token, required adress,required amount}) async {
+    var res =
+        await _dio.post('$uri/api/order',
+            options: Options(
+              headers: <String, String>{
+                'Content-Type': 'application/json; charset=UTF-8',
+                'x-auth-token': token
+              },
+            )
+            ,data: {
+            "address":adress,
+            "amount":amount,
+            }
+            );
+    return res.data;
+  }
 }

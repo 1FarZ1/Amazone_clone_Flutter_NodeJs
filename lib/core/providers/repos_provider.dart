@@ -1,5 +1,6 @@
 import 'package:amazon_clone/core/providers/api_service_provider.dart';
 import 'package:amazon_clone/features/add_product/repo/add_product_repo.dart';
+import 'package:amazon_clone/features/adress/repo/adress_repo.dart';
 import 'package:amazon_clone/features/auth/repository/auth_repo.dart';
 import 'package:amazon_clone/features/cart/repo/cart_repo.dart';
 import 'package:amazon_clone/features/category/repo/category_repo.dart';
@@ -32,4 +33,7 @@ final homeRepoProvider = Provider<HomeRepoImpl>((ref) {
 });
 final cartRepoProvider = Provider<CartRepoImpl>((ref) {
   return CartRepoImpl(apiService: ref.read(apiServiceProvider));
+});
+final adressRepoProvider = Provider<AddressRepoImpl>((ref) {
+  return AddressRepoImpl(apiService: ref.read(apiServiceProvider));
 });

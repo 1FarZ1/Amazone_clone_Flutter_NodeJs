@@ -40,7 +40,4 @@ class CartController extends StateNotifier<AsyncValue> {
     });
   }
 
-  void setProduct(Product product) {
-    state = AsyncValue.data(product);
-  }
 }

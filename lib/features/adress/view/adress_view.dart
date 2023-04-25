@@ -1,5 +1,6 @@
 import 'package:amazon_clone/core/constant/constants.dart';
 import 'package:amazon_clone/core/providers/user_provider.dart';
+import 'package:amazon_clone/features/adress/controller/adress_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pay/pay.dart';
@@ -54,8 +55,9 @@ class _AdressViewState extends ConsumerState<AdressView> {
     if (ref.watch(userStateProvider)
         .address
         .isEmpty) {
-      // addressServices.saveUserAddress(
-      //     context: context, address: addressToBeUsed);
+           ref.read(addressControllerProvider.notifier).saveUserAddress(
+         adress: addressToBeUsed);
+    
     }
     // addressServices.placeOrder(
     //   context: context,
@@ -68,8 +70,8 @@ class _AdressViewState extends ConsumerState<AdressView> {
     if (ref.watch(userStateProvider)
         .address
         .isEmpty) {
-      // addressServices.saveUserAddress(
-      //     context: context, address: addressToBeUsed);
+      ref.read(addressControllerProvider.notifier).saveUserAddress(
+         adress: addressToBeUsed);
     }
     // addressServices.placeOrder(
     //   context: context,
