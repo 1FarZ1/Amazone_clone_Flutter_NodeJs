@@ -133,7 +133,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
             }
             return SingleChildScrollView(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),

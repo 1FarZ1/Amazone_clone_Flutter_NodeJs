@@ -1,4 +1,3 @@
-import 'package:amazon_clone/features/admin/view/widgets/custom_app_bar_admin.dart';
 import 'package:badges/badges.dart' as b;
 import 'package:flutter/material.dart';
 
@@ -30,7 +29,6 @@ class _BottomBarState extends State<BottomBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBarAdmin(),
       body: pages[_page],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _page,

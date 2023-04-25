@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/common/loader.dart';
 import '../../../models/product.dart';
+import '../../product-detaills/controller/product_detaills_controller.dart';
 
 class CategoryDealsScreen extends ConsumerStatefulWidget {
   final String category;
@@ -31,9 +32,6 @@ class _CategoryDealsScreenState extends ConsumerState<CategoryDealsScreen> {
     });
   }
 
-
-
-
   fetchCategoryProducts() async {
     ref.read(categoryControllerProvider.notifier).fetchCategoryProducts(
           widget.category,
@@ -41,8 +39,9 @@ class _CategoryDealsScreenState extends ConsumerState<CategoryDealsScreen> {
         );
   }
 
-  void navigateToDetaillScreen() {
-    GoRouter.of(context).push("/product-detail");
+  void navigateToDetaillScreen(Product product) {
+    ref.read(productDetaillsControllerProvider.notifier).setProduct(product);
+    GoRouter.of(context).push("/product-detaills");
   }
 
   @override
@@ -120,7 +119,9 @@ class _CategoryDealsScreenState extends ConsumerState<CategoryDealsScreen> {
                 itemBuilder: (context, index) {
                   final product = productList![index];
                   return GestureDetector(
-                    onTap: navigateToDetaillScreen,
+                    onTap: () {
+                      navigateToDetaillScreen(product);
+                    },
                     child: Column(
                       children: [
                         SizedBox(

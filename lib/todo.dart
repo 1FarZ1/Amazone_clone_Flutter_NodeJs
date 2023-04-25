@@ -1,1 +1,1 @@
-// add rating to the product
+// think for a solution for the rating bug, maybe you will redesign the whole system
