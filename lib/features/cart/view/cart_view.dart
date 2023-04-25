@@ -19,15 +19,12 @@ class CartView extends ConsumerStatefulWidget {
 
 class _CartViewState extends ConsumerState<CartView> {
   void navigateToSearchScreen(String query) {
-ref.read(searchControllerProvider.notifier).searchQuery = query;
-    GoRouter.of(context).push("/search");  }
+    ref.read(searchControllerProvider.notifier).searchQuery = query;
+    GoRouter.of(context).push("/search");
+  }
 
   void navigateToAddress(int sum) {
-    // Navigator.pushNamed(
-    //   context,
-    //   AddressScreen.routeName,
-    //   arguments: sum.toString(),
-    // );
+    GoRouter.of(context).push("/adress", extra: sum.toStringAsFixed(0));
   }
 
   @override
@@ -58,7 +55,8 @@ ref.read(searchControllerProvider.notifier).searchQuery = query;
                     borderRadius: BorderRadius.circular(7),
                     elevation: 1,
                     child: TextFormField(
-                      onFieldSubmitted:(value) => navigateToSearchScreen(value),
+                      onFieldSubmitted: (value) =>
+                          navigateToSearchScreen(value),
                       decoration: InputDecoration(
                         prefixIcon: InkWell(
                           onTap: () {},
@@ -117,7 +115,7 @@ ref.read(searchControllerProvider.notifier).searchQuery = query;
             const AddressBox(),
             const CartSubtotal(),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(20.0),
               child: CustomButton(
                 text: 'Proceed to Buy (${user.cart.length} items)',
                 onTap: () => navigateToAddress(sum),

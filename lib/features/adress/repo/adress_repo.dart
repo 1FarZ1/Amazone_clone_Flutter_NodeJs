@@ -9,7 +9,7 @@ import '../../../models/user.dart';
 abstract class AddressRepo {
 
   FutureEither saveUserAdress({required String token, required String adress});
-  FutureEither placeOrder({required String token, required String adress,required amount});
+  FutureEither placeOrder({required String token, required String adress,required amount,required cart});
 }
 
 class AddressRepoImpl implements AddressRepo {
@@ -35,12 +35,13 @@ class AddressRepoImpl implements AddressRepo {
   }
   @override
   FutureEither placeOrder(
-      {required String token, required String adress,required amount}) async {
+      {required String token, required String adress,required amount,required cart}) async {
     try {
       var res = await apiService.placeOrder(
         token: token,
         adress: adress,
-        amount:amount
+        amount:amount,
+        cart: cart
       );
       var data= User.fromMap(res);
       return Right(data);

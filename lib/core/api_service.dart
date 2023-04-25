@@ -200,7 +200,7 @@ class ApiService {
             );
     return res.data;
   }
-  Future placeOrder({required token, required adress,required amount}) async {
+  Future placeOrder({required token, required adress,required amount,required cart}) async {
     var res =
         await _dio.post('$uri/api/order',
             options: Options(
@@ -211,7 +211,8 @@ class ApiService {
             )
             ,data: {
             "address":adress,
-            "amount":amount,
+            "totalPrice":amount,
+            "cart":cart
             }
             );
     return res.data;

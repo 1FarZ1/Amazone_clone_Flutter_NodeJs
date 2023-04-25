@@ -2,6 +2,7 @@ import 'package:amazon_clone/core/providers/user_provider.dart';
 import 'package:amazon_clone/core/theme/theme.dart';
 import 'package:amazon_clone/features/add_product/view/add_product_view.dart';
 import 'package:amazon_clone/features/admin/view/admin_view.dart';
+import 'package:amazon_clone/features/adress/view/adress_view.dart';
 import 'package:amazon_clone/features/auth/controller/auth_controller.dart';
 import 'package:amazon_clone/features/category/view/category_view.dart';
 import 'package:amazon_clone/features/home/view/test_view.dart';
@@ -99,6 +100,11 @@ class _MyAppState extends ConsumerState<MyApp> {
             path: "/product-detaills",
             builder: (context, state) {
               return const ProductDetailScreen();
+            }),
+        GoRoute(
+            path: "/adress",
+            builder: (context, state) {
+              return   AdressView(totalAmount: state.extra as String);
             }),
       ]),
       theme: AppTheme.customTheme,

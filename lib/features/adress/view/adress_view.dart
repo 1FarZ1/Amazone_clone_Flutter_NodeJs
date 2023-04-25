@@ -1,3 +1,4 @@
+import 'package:amazon_clone/core/common/loader.dart';
 import 'package:amazon_clone/core/constant/constants.dart';
 import 'package:amazon_clone/core/providers/user_provider.dart';
 import 'package:amazon_clone/features/adress/controller/adress_controller.dart';
@@ -7,7 +8,6 @@ import 'package:pay/pay.dart';
 
 import '../../../core/utils/custom_snack_bar.dart';
 import '../../auth/view/login/widgets/custom_text_field.dart';
-
 
 class AdressView extends ConsumerStatefulWidget {
   final String totalAmount;
@@ -52,12 +52,10 @@ class _AdressViewState extends ConsumerState<AdressView> {
   }
 
   void onApplePayResult(res) {
-    if (ref.watch(userStateProvider)
-        .address
-        .isEmpty) {
-           ref.read(addressControllerProvider.notifier).saveUserAddress(
-         adress: addressToBeUsed);
-    
+    if (ref.watch(userStateProvider).address.isEmpty) {
+      ref
+          .read(addressControllerProvider.notifier)
+          .saveUserAddress(adress: addressToBeUsed);
     }
     // addressServices.placeOrder(
     //   context: context,
@@ -67,11 +65,10 @@ class _AdressViewState extends ConsumerState<AdressView> {
   }
 
   void onGooglePayResult(res) {
-    if (ref.watch(userStateProvider)
-        .address
-        .isEmpty) {
-      ref.read(addressControllerProvider.notifier).saveUserAddress(
-         adress: addressToBeUsed);
+    if (ref.watch(userStateProvider).address.isEmpty) {
+      ref
+          .read(addressControllerProvider.notifier)
+          .saveUserAddress(adress: addressToBeUsed);
     }
     // addressServices.placeOrder(
     //   context: context,
@@ -102,9 +99,14 @@ class _AdressViewState extends ConsumerState<AdressView> {
     }
   }
 
+  final Future<PaymentConfiguration> _googlePayConfigFuture =
+      PaymentConfiguration.fromAsset('gpay.json');
+  final Future<PaymentConfiguration> _applePayConfigure =
+      PaymentConfiguration.fromAsset('applepay.json');
+
   @override
   Widget build(BuildContext context) {
-    var address =ref.watch(userStateProvider).address;
+    var address = ref.watch(userStateProvider).address;
 
     return Scaffold(
       appBar: PreferredSize(
@@ -179,31 +181,41 @@ class _AdressViewState extends ConsumerState<AdressView> {
                   ],
                 ),
               ),
-              ApplePayButton(
-                width: double.infinity,
-                style: ApplePayButtonStyle.whiteOutline,
-                type: ApplePayButtonType.buy,
-                paymentConfigurationAsset: 'applepay.json',
-                onPaymentResult: onApplePayResult,
-                paymentItems: paymentItems,
-                margin: const EdgeInsets.only(top: 15),
-                height: 50,
-                onPressed: () => payPressed(address),
-              ),
+              FutureBuilder(
+                  future: _applePayConfigure,
+                  builder: (_, snapshot) {
+                    return snapshot.hasData
+                        ? ApplePayButton(
+                            width: double.infinity,
+                            style: ApplePayButtonStyle.automatic,
+                            type: ApplePayButtonType.buy,
+                            paymentConfiguration: snapshot.data!,
+                            onPaymentResult: onApplePayResult,
+                            paymentItems: paymentItems,
+                            margin: const EdgeInsets.only(top: 15),
+                            height: 50,
+                            onPressed: () => payPressed(address),
+                            loadingIndicator: const Loader(),
+                          )
+                        : const Text("try");
+                  }),
               const SizedBox(height: 10),
-              GooglePayButton(
-                onPressed: () => payPressed(address),
-                paymentConfigurationAsset: 'gpay.json',
-                onPaymentResult: onGooglePayResult,
-                paymentItems: paymentItems,
-                height: 50,
-                // key: GooglePayButtonStyle.black,
-                type: GooglePayButtonType.buy,
-                margin: const EdgeInsets.only(top: 15),
-                loadingIndicator: const Center(
-                  child: CircularProgressIndicator(),
-                ),
-              ),
+              FutureBuilder(
+                  future: _googlePayConfigFuture,
+                  builder: (_, snapshot) {
+                    return snapshot.hasData
+                        ? GooglePayButton(
+                            onPressed: () => payPressed(address),
+                            paymentConfiguration: snapshot.data!,
+                            onPaymentResult: onGooglePayResult,
+                            paymentItems: paymentItems,
+                            height: 50,
+                            type: GooglePayButtonType.buy,
+                            margin: const EdgeInsets.only(top: 15),
+                            loadingIndicator: const Loader(),
+                          )
+                        : const Text("try");
+                  }),
             ],
           ),
         ),
