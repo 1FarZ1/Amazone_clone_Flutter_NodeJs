@@ -1,6 +1,7 @@
 import 'package:amazon_clone/features/admin/view/all-orders/controller/order_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/common/loader.dart';
 import '../../../account/view/widgets/single_product.dart';
@@ -32,14 +33,10 @@ class _OrdersScreenState extends ConsumerState<OrdersScreen> {
       gridDelegate:
           const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
       itemBuilder: (context, index) {
-        final orderData = orders![index];
+        final orderData = orders[index];
         return GestureDetector(
           onTap: () {
-            // Navigator.pushNamed(
-            //   context,
-            //   OrderDetailScreen.routeName,
-            //   arguments: orderData,
-            // );
+              GoRouter.of(context).push("/order-detaills",extra: orders[index]);
           },
           child: SizedBox(
             height: 140,
