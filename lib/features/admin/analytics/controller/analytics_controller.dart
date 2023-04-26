@@ -29,8 +29,7 @@ class AnalyticsController extends StateNotifier<AsyncValue> {
     res.fold((l) {
       state = AsyncValue.error(l.errorMessage, StackTrace.empty);
     }, (r) {
-      ref.read(userStateProvider.notifier).setUser(r);
-      state = const AsyncValue.data('success');
+      state =  AsyncValue.data(r);
     });
   }
 }

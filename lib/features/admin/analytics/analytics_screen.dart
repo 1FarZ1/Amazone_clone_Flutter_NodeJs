@@ -21,7 +21,9 @@ class _AnalyticsScreenState extends ConsumerState<AnalyticsScreen> {
   @override
   void initState() {
     super.initState();
-    getEarnings();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      getEarnings();
+    });
   }
 
   getEarnings() async {
@@ -30,37 +32,43 @@ class _AnalyticsScreenState extends ConsumerState<AnalyticsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ref.watch(analyticsControllerProvider).when(data: (earningData){
-      totalSales = earningData['totalEarnings'];
-    earnings = earningData['sales'];
-  return Column(
-      children: [
-        Text(
-          '\$$totalSales',
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        SizedBox(
-          height: 250,
-          child: CategoryProductsChart(seriesList: [
-            charts.Series(
-              id: 'Sales',
-              data: earnings!,
-              domainFn: (Sales sales, _) => sales.label,
-              measureFn: (Sales sales, _) => sales.earning,
+    return ref.watch(analyticsControllerProvider).when(
+      data: (earningData) {
+        totalSales = earningData['totalEarnings'];
+        earnings = earningData['sales'];
+        return Column(
+          children: [
+            Text(
+              '\$$totalSales',
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ]),
-        )
-      ],
+            SizedBox(
+              height: 250,
+              child: CategoryProductsChart(seriesList: [
+                charts.Series(
+                  id: 'Sales',
+                  data: earnings!,
+                  domainFn: (Sales sales, _) => sales.label,
+                  measureFn: (Sales sales, _) => sales.earning,
+                ),
+              ]),
+            )
+          ],
+        );
+      },
+      error: (error, stackTrace) {
+        return Center(
+          child: Text(error.toString()),
+        );
+      },
+      loading: () {
+        return const Center(
+          child: Loader(),
+        );
+      },
     );
-
-    }, error:(error, stackTrace) {
-      return const Center(child: Text("Error"));
-    }, loading:() {
-      return const Center(child: Loader(),);
-    },);
-    
   }
 }

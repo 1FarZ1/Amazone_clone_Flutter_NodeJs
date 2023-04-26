@@ -12,7 +12,8 @@ import 'package:amazon_clone/features/product-detaills/repo/product_detaills_rep
 import 'package:amazon_clone/features/search/repo/search_repo.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../features/admin/all-orders/repo/order_repo.dart';
+import '../../features/admin/view/all-orders/repo/order_repo.dart';
+
 
 final authRepoProvider = Provider<AuthRepoImpl>((ref) {
   return AuthRepoImpl(ref.read(apiServiceProvider));
