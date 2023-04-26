@@ -43,15 +43,14 @@ class AddressController extends StateNotifier<AsyncValue> {
     });
     var cart = ref.read(userStateProvider).cart;
     var res = await adressRepoImpl.placeOrder(
-      adress: adress ?? "",
-      token: token ?? "",
-      amount: amount,
-      cart: cart
-    );
+        adress: adress ?? "", token: token ?? "", amount: amount, cart: cart);
 
     res.fold((l) {
       state = AsyncValue.error(l.errorMessage, StackTrace.empty);
     }, (r) {
+      ref.read(userStateProvider).copyWith(
+          cart: [],
+      );
       ref.read(userStateProvider.notifier).setUser(r);
       state = const AsyncValue.data('success');
     });

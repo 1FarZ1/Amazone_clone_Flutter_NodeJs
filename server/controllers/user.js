@@ -103,4 +103,13 @@ let placeOrder = async (req, res) => {
     }
   }
 
-export {addToCart,removeFromCart,saveUserAdress,placeOrder}
+let allOrders = async (req, res) => {
+    try {
+      const orders = await Order.find({ userId: req.user });
+      res.json(orders);
+    } catch (e) {
+      res.status(500).json({ error: e.message });
+    }
+  }
+  
+export {addToCart,removeFromCart,saveUserAdress,placeOrder,allOrders}
