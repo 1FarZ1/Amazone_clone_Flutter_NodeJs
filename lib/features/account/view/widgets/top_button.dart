@@ -1,5 +1,6 @@
 
 
+import 'package:amazon_clone/features/account/controller/account_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -28,9 +29,11 @@ class TopButtons extends ConsumerWidget {
         Row(
           children: [
             AccountButton(
-              text: 'Log Out', onTap: () {},
+              text: 'Log Out', onTap: () {
+                ref.read(accountControllerProvider.notifier).logOut();
+              },
 
-              // onTap: () => AccountServices().logOut(context),
+
             ),
             AccountButton(
               text: 'Your Wish List',
