@@ -231,7 +231,19 @@ class ApiService {
   }
   Future getAllOrders({required token}) async {
     var res =
-        await _dio.get('$uri/api/order/me',
+        await _dio.get('$uri/admin/all-orders',
+            options: Options(
+              headers: <String, String>{
+                'Content-Type': 'application/json; charset=UTF-8',
+                'x-auth-token': token
+              },
+            )
+            );
+    return res.data;
+  }
+  Future getAnalytics({required token}) async {
+    var res =
+        await _dio.get('$uri/admin/get-analytics',
             options: Options(
               headers: <String, String>{
                 'Content-Type': 'application/json; charset=UTF-8',
