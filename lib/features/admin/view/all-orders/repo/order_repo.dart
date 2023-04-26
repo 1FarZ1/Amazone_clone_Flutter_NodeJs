@@ -6,10 +6,8 @@ import '../../../../../core/api_service.dart';
 import '../../../../../core/errors/failire.dart';
 import '../../../../../core/utils/type_def.dart';
 
-
 abstract class OrderRepo {
-  FutureEither getAllOrders(
-      {required String token});
+  FutureEither getAllOrders({required String token});
 }
 
 class OrderRepoImpl implements OrderRepo {
@@ -17,13 +15,15 @@ class OrderRepoImpl implements OrderRepo {
   final ApiService apiService;
 
   @override
-  FutureEither getAllOrders(
-      {required String token}) async {
+  FutureEither getAllOrders({required String token}) async {
     try {
       var res = await apiService.getAllOrders(
         token: token,
       );
-      var data = Order.fromMap(res) ;
+      var data = [];
+      for (var i in res) {
+        data.add(Order.fromMap(res));
+      }
       return Right(data);
     } on Exception catch (e) {
       if (e is DioError) {

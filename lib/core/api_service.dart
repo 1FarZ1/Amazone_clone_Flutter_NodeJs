@@ -185,72 +185,62 @@ class ApiService {
             ));
     return res.data;
   }
+
   Future saveUserAdress({required token, required adress}) async {
-    var res =
-        await _dio.post('$uri/api/save-user-adress',
-            options: Options(
-              headers: <String, String>{
-                'Content-Type': 'application/json; charset=UTF-8',
-                'x-auth-token': token
-              },
-            )
-            ,data: {
-            "address":adress
-            }
-            );
+    var res = await _dio.post('$uri/api/save-user-adress',
+        options: Options(
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            'x-auth-token': token
+          },
+        ),
+        data: {"address": adress});
     return res.data;
   }
-  Future placeOrder({required token, required adress,required amount,required cart}) async {
-    var res =
-        await _dio.post('$uri/api/order',
-            options: Options(
-              headers: <String, String>{
-                'Content-Type': 'application/json; charset=UTF-8',
-                'x-auth-token': token
-              },
-            )
-            ,data: {
-            "address":adress,
-            "totalPrice":amount,
-            "cart":cart
-            }
-            );
+
+  Future placeOrder(
+      {required token, required adress, required amount, required cart}) async {
+    var res = await _dio.post('$uri/api/order',
+        options: Options(
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            'x-auth-token': token
+          },
+        ),
+        data: {"address": adress, "totalPrice": amount, "cart": cart});
     return res.data;
   }
+
   Future getOrders({required token}) async {
-    var res =
-        await _dio.get('$uri/api/order/me',
-            options: Options(
-              headers: <String, String>{
-                'Content-Type': 'application/json; charset=UTF-8',
-                'x-auth-token': token
-              },
-            )
-            );
+    var res = await _dio.get('$uri/api/order/me',
+        options: Options(
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            'x-auth-token': token
+          },
+        ));
     return res.data;
   }
+
   Future getAllOrders({required token}) async {
-    var res =
-        await _dio.get('$uri/admin/all-orders',
-            options: Options(
-              headers: <String, String>{
-                'Content-Type': 'application/json; charset=UTF-8',
-                'x-auth-token': token
-              },
-            )
-            );
+    var res = await _dio.get('$uri/admin/get-orders',
+        options: Options(
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            'x-auth-token': token
+          },
+        ));
     return res.data;
   }
+
   Future getAnalytics({required token}) async {
-    var res =
-        await _dio.get('$uri/admin/get-analytics',
-            options: Options(
-              headers: <String, String>{
-                'Content-Type': 'application/json; charset=UTF-8',
-                'x-auth-token': token
-              },
-            )
-            );
+    var res = await _dio.get('$uri/admin/analytics',
+        options: Options(
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            'x-auth-token': token
+          },
+        ));
     return res.data;
   }
 }

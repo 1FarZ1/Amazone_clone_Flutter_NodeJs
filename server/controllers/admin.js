@@ -1,4 +1,5 @@
 import {Product} from '../models/product.js';
+import {Order} from '../models/order.js';
 
 let addProduct = async (req, res) => {
     try {
@@ -92,6 +93,7 @@ let getAnalytics=  async (req, res) => {
   
       res.json(earnings);
     } catch (e) {
+        console.log(e);
       res.status(500).json({ error: e.message });
     }
   }

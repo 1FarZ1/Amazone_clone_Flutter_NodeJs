@@ -29,6 +29,9 @@ class _OrdersScreenState extends ConsumerState<OrdersScreen> {
         if (orders == null) {
           return const Center(child: Text("No Orders Yet"));
         }
+        if (orders == []) {
+          return const Center(child: Text("No Orders Yet"));
+        }
         return GridView.builder(
           itemCount: orders!.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

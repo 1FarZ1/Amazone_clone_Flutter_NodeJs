@@ -16,12 +16,11 @@ class PostsScreen extends ConsumerStatefulWidget {
 
 class _PostsScreenState extends ConsumerState<PostsScreen> {
   List<Product>? products;
-  // final AdminServices adminServices = AdminServices();
 
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 1), () {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(postControllerProvider.notifier).getPosts(context: context);
     });
   }

@@ -34,6 +34,9 @@ class _AnalyticsScreenState extends ConsumerState<AnalyticsScreen> {
   Widget build(BuildContext context) {
     return ref.watch(analyticsControllerProvider).when(
       data: (earningData) {
+        if (earningData == null) {
+          return const Center(child: Text("No Earnings Yet"));
+        }
         totalSales = earningData['totalEarnings'];
         earnings = earningData['sales'];
         return Column(

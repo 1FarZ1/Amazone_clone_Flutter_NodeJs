@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import { productSchema } from "./product";
+import { productSchema } from "./product.js";
 
 const orderSchema = Schema({
   products: [
@@ -34,4 +34,4 @@ const orderSchema = Schema({
 });
 
 const Order = model("Order", orderSchema);
-export default Order;
+export  {Order};
