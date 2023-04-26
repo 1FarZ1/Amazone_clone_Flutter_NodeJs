@@ -1,11 +1,11 @@
-import 'package:amazon_clone/features/posts/controller/posts_controller.dart';
+import 'package:amazon_clone/features/admin/posts/controller/posts_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../core/common/loader.dart';
-import '../../../models/product.dart';
-import '../../account/view/widgets/single_product.dart';
+import '../../../../core/common/loader.dart';
+import '../../../../models/product.dart';
+import '../../../account/view/widgets/single_product.dart';
 
 class PostsScreen extends ConsumerStatefulWidget {
   const PostsScreen({Key? key}) : super(key: key);

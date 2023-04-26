@@ -1,11 +1,11 @@
 
 import 'package:amazon_clone/core/providers/repos_provider.dart';
 import 'package:amazon_clone/core/providers/shared_preference_provider.dart';
-import 'package:amazon_clone/features/posts/repo/posts_repo.dart';
+import 'package:amazon_clone/features/admin/posts/repo/posts_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../models/product.dart';
+import '../../../../models/product.dart';
 
 final postControllerProvider =
     StateNotifierProvider<PostsController, AsyncValue>((ref) {

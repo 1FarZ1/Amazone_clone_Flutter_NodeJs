@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
-import '../../../core/api_service.dart';
-import '../../../core/errors/failire.dart';
-import '../../../core/utils/type_def.dart';
-import '../../../models/product.dart';
+import '../../../../core/api_service.dart';
+import '../../../../core/errors/failire.dart';
+import '../../../../core/utils/type_def.dart';
+import '../../../../models/product.dart';
 
 abstract class PostsRepo {
   FutureEither<List<Product>> getPosts({required String token});

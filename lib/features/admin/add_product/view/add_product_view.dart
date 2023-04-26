@@ -1,15 +1,15 @@
 import 'dart:io';
 
 import 'package:amazon_clone/core/constant/constants.dart';
-import 'package:amazon_clone/features/add_product/controller/add_product_controller.dart';
+import 'package:amazon_clone/features/admin/add_product/controller/add_product_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/utils/image_picker.dart';
-import '../../auth/view/login/widgets/custom_button.dart';
-import '../../auth/view/login/widgets/custom_text_field.dart';
+import '../../../../core/utils/image_picker.dart';
+import '../../../auth/view/login/widgets/custom_button.dart';
+import '../../../auth/view/login/widgets/custom_text_field.dart';
 
 class AddProductScreen extends ConsumerStatefulWidget {
   const AddProductScreen({Key? key}) : super(key: key);

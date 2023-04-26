@@ -1,6 +1,6 @@
 import 'package:amazon_clone/core/providers/user_provider.dart';
 import 'package:amazon_clone/core/theme/theme.dart';
-import 'package:amazon_clone/features/add_product/view/add_product_view.dart';
+import 'package:amazon_clone/features/admin/add_product/view/add_product_view.dart';
 import 'package:amazon_clone/features/admin/view/admin_view.dart';
 import 'package:amazon_clone/features/adress/view/adress_view.dart';
 import 'package:amazon_clone/features/account/view/order_detaills.dart';

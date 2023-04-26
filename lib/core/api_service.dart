@@ -229,4 +229,16 @@ class ApiService {
             );
     return res.data;
   }
+  Future getAllOrders({required token}) async {
+    var res =
+        await _dio.get('$uri/api/order/me',
+            options: Options(
+              headers: <String, String>{
+                'Content-Type': 'application/json; charset=UTF-8',
+                'x-auth-token': token
+              },
+            )
+            );
+    return res.data;
+  }
 }

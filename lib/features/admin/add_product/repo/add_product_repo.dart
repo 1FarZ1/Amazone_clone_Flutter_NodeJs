@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:amazon_clone/core/api_service.dart';
 import 'package:cloudinary_public/cloudinary_public.dart';
 
-import '../../../models/product.dart';
+import '../../../../models/product.dart';
 
 abstract class AddProductRepo {
   Future addProduct(
