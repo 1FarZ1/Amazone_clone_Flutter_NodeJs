@@ -18,6 +18,8 @@ class UserSt extends StateNotifier<User> {
   }
 
   bool isUserLoggedIn() {
-    return state != User.empty();
+    return !(state.equals(User.empty()));
   }
+
+  // ovveride the equal operator for me
 }

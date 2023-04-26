@@ -49,11 +49,11 @@ class _MyAppState extends ConsumerState<MyApp> {
         GoRoute(
           path: "/redirect",
           redirect: (context, state) {
-            var user = ref.watch(userStateProvider.notifier
+            var isUserLoggedIn = ref.watch(userStateProvider.notifier
                 .select((value) => value.isUserLoggedIn()));
             var typeUser =
                 ref.watch(userStateProvider.select((value) => value.type));
-            if (!user) {
+            if (!isUserLoggedIn) {
               return "/login";
             } else {
               if (typeUser == "admin") {
@@ -104,7 +104,7 @@ class _MyAppState extends ConsumerState<MyApp> {
         GoRoute(
             path: "/adress",
             builder: (context, state) {
-              return   AdressView(totalAmount: state.extra as String);
+              return AdressView(totalAmount: state.extra as String);
             }),
       ]),
       theme: AppTheme.customTheme,

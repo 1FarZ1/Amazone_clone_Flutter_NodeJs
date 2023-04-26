@@ -57,11 +57,10 @@ class _AdressViewState extends ConsumerState<AdressView> {
           .read(addressControllerProvider.notifier)
           .saveUserAddress(adress: addressToBeUsed);
     }
-    // addressServices.placeOrder(
-    //   context: context,
-    //   address: addressToBeUsed,
-    //   totalSum: double.parse(widget.totalAmount),
-    // );
+   ref.read(addressControllerProvider.notifier).placeOrder(
+      adress: addressToBeUsed,
+      amount: double.parse(widget.totalAmount),
+    );
   }
 
   void onGooglePayResult(res) {
@@ -70,11 +69,10 @@ class _AdressViewState extends ConsumerState<AdressView> {
           .read(addressControllerProvider.notifier)
           .saveUserAddress(adress: addressToBeUsed);
     }
-    // addressServices.placeOrder(
-    //   context: context,
-    //   address: addressToBeUsed,
-    //   totalSum: double.parse(widget.totalAmount),
-    // );
+    ref.read(addressControllerProvider.notifier).placeOrder(
+      adress: addressToBeUsed,
+      amount: double.parse(widget.totalAmount),
+    );
   }
 
   void payPressed(String addressFromProvider) {

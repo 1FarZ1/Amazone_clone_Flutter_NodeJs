@@ -55,7 +55,6 @@ class AuthController extends StateNotifier<AsyncValue> {
         ref.read(userStateProvider.notifier).setUser(user);
       });
 
-      // GoRouter.of(context).push("/home");
     });
   }
 
