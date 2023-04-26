@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/common/loader.dart';
-import '../../../models/product.dart';
 import '../../home/view/widgets/address_box.dart';
 import '../../product-detaills/controller/product_detaills_controller.dart';
 import 'widget/searched_product.dart';

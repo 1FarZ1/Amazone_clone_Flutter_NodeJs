@@ -50,7 +50,7 @@ class User {
       ),
     );
   }
-  factory User.Empty() {
+  factory User.empty() {
     return User(
       id: '',
       name: '',
@@ -95,6 +95,4 @@ class User {
     }
     return false;
   }
-
- 
 }

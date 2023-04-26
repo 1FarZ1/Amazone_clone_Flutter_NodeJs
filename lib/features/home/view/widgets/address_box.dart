@@ -1,4 +1,3 @@
-import 'package:amazon_clone/core/constant/constants.dart';
 import 'package:amazon_clone/core/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../models/user.dart';
@@ -9,19 +7,17 @@ final userStateProvider = StateNotifierProvider<UserSt, User>((ref) {
 });
 
 class UserSt extends StateNotifier<User> {
-  UserSt() : super(User.Empty());
+  UserSt() : super(User.empty());
 
   void setUser(User user) {
     state = user;
   }
 
   void removeUser() {
-    state = User.Empty();
+    state = User.empty();
   }
 
   bool isUserLoggedIn() {
-    return state != User.Empty();
+    return state != User.empty();
   }
-
- 
 }

@@ -9,16 +9,15 @@ class BottomBar extends StatefulWidget {
   const BottomBar({Key? key, required this.paramPages}) : super(key: key);
 
   @override
-  State<BottomBar> createState() => _BottomBarState(paramPages);
+  State<BottomBar> createState() => _BottomBarState();
 }
 
 class _BottomBarState extends State<BottomBar> {
   int _page = 0;
   double bottomBarWidth = 42;
   double bottomBarBorderWidth = 5;
-  final List<Widget> pages;
 
-  _BottomBarState(this.pages);
+  _BottomBarState();
 
   void updatePage(int page) {
     setState(() {
@@ -29,7 +28,7 @@ class _BottomBarState extends State<BottomBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: pages[_page],
+      body: widget.paramPages[_page],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _page,
         selectedItemColor: AppConsts.selectedNavBarColor,

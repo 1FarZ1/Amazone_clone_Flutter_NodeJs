@@ -1,7 +1,6 @@
 import 'package:amazon_clone/core/providers/repos_provider.dart';
 import 'package:amazon_clone/core/providers/shared_preference_provider.dart';
 import 'package:amazon_clone/core/providers/user_provider.dart';
-import 'package:amazon_clone/features/product-detaills/repo/product_detaills_repo.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../models/product.dart';
@@ -9,14 +8,11 @@ import '../repo/cart_repo.dart';
 
 final cartControllerProvider =
     StateNotifierProvider<CartController, AsyncValue>((ref) {
-  return CartController(
-      cartRepoImpl: ref.watch(cartRepoProvider),
-      ref: ref);
+  return CartController(cartRepoImpl: ref.watch(cartRepoProvider), ref: ref);
 });
 
 class CartController extends StateNotifier<AsyncValue> {
-  CartController(
-      {required this.cartRepoImpl, required this.ref})
+  CartController({required this.cartRepoImpl, required this.ref})
       : super(const AsyncData(null));
   final CartRepoImpl cartRepoImpl;
   final StateNotifierProviderRef ref;
@@ -39,5 +35,4 @@ class CartController extends StateNotifier<AsyncValue> {
       state = const AsyncValue.data('success');
     });
   }
-
 }

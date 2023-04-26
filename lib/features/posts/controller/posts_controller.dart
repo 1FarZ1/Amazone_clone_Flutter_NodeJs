@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:amazon_clone/core/providers/repos_provider.dart';
 import 'package:amazon_clone/core/providers/shared_preference_provider.dart';
@@ -27,7 +26,6 @@ class PostsController extends StateNotifier<AsyncValue<List<Product>?>> {
     });
     await postsRepoImpl.getPosts(token: token ?? "").then((value) {
       value.fold((failure) {
-        print(failure.toString());
         state = AsyncValue.error(failure, StackTrace.empty);
       }, (products) {
         state = AsyncValue.data(products);

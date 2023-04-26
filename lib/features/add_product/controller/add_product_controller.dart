@@ -1,7 +1,7 @@
 import 'package:amazon_clone/core/providers/repos_provider.dart';
 import 'package:amazon_clone/core/providers/shared_preference_provider.dart';
 import 'package:amazon_clone/features/add_product/repo/add_product_repo.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final addProductControllerProvider =

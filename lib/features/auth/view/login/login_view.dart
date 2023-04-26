@@ -1,10 +1,6 @@
-import 'dart:developer';
-
-import 'package:amazon_clone/core/providers/shared_preference_provider.dart';
 import 'package:amazon_clone/features/auth/controller/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../../core/constant/constants.dart';
 import 'widgets/custom_button.dart';
@@ -154,7 +150,6 @@ class _LoginViewState extends ConsumerState<LoginView> {
                     clearInputField();
                     return const SizedBox.shrink();
                   }),
-              
             ],
           ),
         ),

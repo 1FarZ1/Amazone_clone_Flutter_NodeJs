@@ -1,3 +1,2 @@
-// think for a solution for the rating bug, maybe you will redesign the whole system
-// fix the after add to cart issue with rebuild
+// think for a solution for the rating bug, maybe you will redesign the whole system, i think this issue can be sovled with creating a global provider for rating i can not change it right now
 // gix the problem with _id
