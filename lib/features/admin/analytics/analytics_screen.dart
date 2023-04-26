@@ -42,7 +42,7 @@ class _AnalyticsScreenState extends ConsumerState<AnalyticsScreen> {
         return Column(
           children: [
             Text(
-              '\$$totalSales',
+              '\$${totalSales ?? 0}}',
               style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
