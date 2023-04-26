@@ -1,6 +1,7 @@
 import 'package:amazon_clone/features/account/controller/account_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/common/loader.dart';
 import '../../../../core/constant/constants.dart';
@@ -74,11 +75,8 @@ class _OrdersState extends ConsumerState<Orders> {
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () {
-                      // Navigator.pushNamed(
-                      //   context,
-                      //   OrderDetailScreen.routeName,
-                      //   arguments: orders![index],
-                      // );
+                      GoRouter.of(context)
+                          .push('/order-detaills', extra: orders[index]);
                     },
                     child: SingleProduct(
                       image: orders![index].products[0].images[0],

@@ -3,6 +3,7 @@ import 'package:amazon_clone/core/theme/theme.dart';
 import 'package:amazon_clone/features/add_product/view/add_product_view.dart';
 import 'package:amazon_clone/features/admin/view/admin_view.dart';
 import 'package:amazon_clone/features/adress/view/adress_view.dart';
+import 'package:amazon_clone/features/account/view/order_detaills.dart';
 import 'package:amazon_clone/features/auth/controller/auth_controller.dart';
 import 'package:amazon_clone/features/category/view/category_view.dart';
 import 'package:amazon_clone/features/home/view/test_view.dart';
@@ -14,6 +15,7 @@ import 'package:go_router/go_router.dart';
 
 import 'features/auth/view/login/login_view.dart';
 import 'features/splash/splash_view.dart';
+import 'models/order.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -105,6 +107,11 @@ class _MyAppState extends ConsumerState<MyApp> {
             path: "/adress",
             builder: (context, state) {
               return AdressView(totalAmount: state.extra as String);
+            }),
+        GoRoute(
+            path: "/order-detaills",
+            builder: (context, state) {
+              return OrderDetailScreen(order: state.extra as Order);
             }),
       ]),
       theme: AppTheme.customTheme,
