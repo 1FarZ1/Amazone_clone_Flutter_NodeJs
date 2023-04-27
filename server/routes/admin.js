@@ -10,9 +10,9 @@ let domaineName="/admin";
 adminRoute.post(domaineName + "/add-product",admin,addProduct);
 adminRoute.get(domaineName + "/all-products",admin,allProducts);
 adminRoute.post(domaineName + "/delete-product",admin,deleteProduct);
-adminRoute.get("/admin/get-orders", admin,getOrders);
-adminRoute.post("/admin/change-order-status", admin, changeOrderStatus);
-adminRoute.get("/admin/analytics", admin, getAnalytics);
+adminRoute.get(domaineName + "/get-orders", admin,getOrders);
+adminRoute.post(domaineName + "/change-order-status", admin, changeOrderStatus);
+adminRoute.get(domaineName + "/analytics", admin, getAnalytics);
 
 
 

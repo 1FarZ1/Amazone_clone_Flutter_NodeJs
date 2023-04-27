@@ -48,10 +48,14 @@ class ServerFailure extends Failure {
   }
 }
 
+
+// didnt add caching yet
 class CacheFailure extends Failure {
   CacheFailure(super.errorMessage);
 }
 
+
+// need to check if internet connection is available
 class NetworkFailure extends Failure {
   NetworkFailure(super.errorMessage);
 }

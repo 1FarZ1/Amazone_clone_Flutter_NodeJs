@@ -16,9 +16,8 @@ class ProductSt extends StateNotifier<List<Product>> {
   void removeProduct(Product p) async {
     state.remove(p);
   }
-
-  
-  // void updateProduct(Product p) async {
-  //   state[state.indexOf(p)] = p;
-  // }
+   
+  void updateProduct(Product p) async {
+    state[state.indexOf(p)] = p;
+  }
 }
