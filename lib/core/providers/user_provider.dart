@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../../models/user.dart';
 
 final userStateProvider = StateNotifierProvider<UserSt, User>((ref) {
@@ -20,6 +19,4 @@ class UserSt extends StateNotifier<User> {
   bool isUserLoggedIn() {
     return !(state.equals(User.empty()));
   }
-
-  // ovveride the equal operator for me
 }

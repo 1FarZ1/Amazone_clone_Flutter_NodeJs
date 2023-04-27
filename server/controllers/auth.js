@@ -3,7 +3,6 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 
-// hada howa controller t3 auth li yhdr m3a auth , drnah hna for better architecture 
 let  signIn= async (req, res) => {
     const {email , password} = req.body;
     console.log(req.body);
@@ -85,26 +84,12 @@ let tokenValid = async (req, res) => {
 
 
 
-let tempName = async (req, res) => {
-        console.log("temp name");
+let getUser = async (req, res) => {
         const user = await User.findById(req.user);
         res.json({ ...user._doc, token: req.token });
       }
 
-
-
-
-let  signOut= (req, res) => {
-    res.status(200).send("hello world");
-};
-
-
-
-
-
-
-
-export { signUp,signIn ,signOut ,tokenValid,tempName};
+export { signUp,signIn  ,tokenValid,getUser};
 
 
 //JWT 

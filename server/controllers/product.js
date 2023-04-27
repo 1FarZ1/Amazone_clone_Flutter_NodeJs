@@ -3,7 +3,6 @@ import {Product} from '../models/product.js';
 
 let getCategoryProducts = async (req, res) => {
     try {  
-        // change it to title
 
         const category = req.query.category;
         const products = await Product.find({category:category});

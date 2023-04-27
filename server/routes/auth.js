@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { signUp, signIn, signOut,tokenValid,tempName } from "../controllers/auth.js";
+import { signUp, signIn,tokenValid,getUser } from "../controllers/auth.js";
 import auth from "../middlewars/auth.js";
 
 
@@ -12,7 +12,8 @@ const router = Router();
 router.post( domaineName + "/signup",signUp);
 router.post( domaineName + "/tokenIsValid",tokenValid);
 router.post( domaineName + "/signin",signIn);
-router.get("/", auth,tempName);
+
+router.get("/", auth,getUser);
 
 
 export default router;
