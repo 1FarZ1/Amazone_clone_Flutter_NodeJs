@@ -1,5 +1,6 @@
 import User from '../models/user.js';
 import {Product} from '../models/product.js';
+import Order from '../models/order.js';
 
 let addToCart = async (req, res) => {
     try {
