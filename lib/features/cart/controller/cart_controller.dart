@@ -8,13 +8,13 @@ import '../repo/cart_repo.dart';
 
 final cartControllerProvider =
     StateNotifierProvider<CartController, AsyncValue>((ref) {
-  return CartController(cartRepoImpl: ref.watch(cartRepoProvider), ref: ref);
+  return CartController(orderRepo: ref.watch(cartRepoProvider), ref: ref);
 });
 
 class CartController extends StateNotifier<AsyncValue> {
-  CartController({required this.cartRepoImpl, required this.ref})
+  CartController({required this.orderRepo, required this.ref})
       : super(const AsyncData(null));
-  final CartRepoImpl cartRepoImpl;
+  final CartRepo orderRepo;
   final StateNotifierProviderRef ref;
 
   void removeFromCart({required Product product}) async {
@@ -23,7 +23,7 @@ class CartController extends StateNotifier<AsyncValue> {
     await ref.watch(sharedPreferenceProvider)?.then((pref) async {
       token = pref.getString("x-auth-token");
     });
-    var res = await cartRepoImpl.removeFromCart(
+    var res = await orderRepo.removeFromCart(
       productId: product.id ?? "",
       token: token ?? "",
     );

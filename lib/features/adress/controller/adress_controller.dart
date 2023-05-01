@@ -7,13 +7,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 final addressControllerProvider =
     StateNotifierProvider<AddressController, AsyncValue>((ref) {
   return AddressController(
-      adressRepoImpl: ref.watch(adressRepoProvider), ref: ref);
+      orderRepo: ref.watch(adressRepoProvider), ref: ref);
 });
 
 class AddressController extends StateNotifier<AsyncValue> {
-  AddressController({required this.adressRepoImpl, required this.ref})
+  AddressController({required this.orderRepo, required this.ref})
       : super(const AsyncData(null));
-  final AddressRepoImpl adressRepoImpl;
+  final AddressRepo orderRepo;
   final StateNotifierProviderRef ref;
 
   void saveUserAddress({required adress}) async {
@@ -22,7 +22,7 @@ class AddressController extends StateNotifier<AsyncValue> {
     await ref.watch(sharedPreferenceProvider)?.then((pref) async {
       token = pref.getString("x-auth-token");
     });
-    var res = await adressRepoImpl.saveUserAdress(
+    var res = await orderRepo.saveUserAdress(
       adress: adress ?? "",
       token: token ?? "",
     );
@@ -42,7 +42,7 @@ class AddressController extends StateNotifier<AsyncValue> {
       token = pref.getString("x-auth-token");
     });
     var cart = ref.read(userStateProvider).cart;
-    var res = await adressRepoImpl.placeOrder(
+    var res = await orderRepo.placeOrder(
         adress: adress ?? "", token: token ?? "", amount: amount, cart: cart);
 
     res.fold((l) {

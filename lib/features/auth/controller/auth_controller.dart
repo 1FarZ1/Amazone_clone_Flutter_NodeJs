@@ -16,7 +16,7 @@ final authControllerProvider =
 class AuthController extends StateNotifier<AsyncValue> {
   AuthController({required this.authRepository, required this.ref})
       : super(const AsyncData(null));
-  final AuthRepoImpl authRepository;
+  final AuthRepo authRepository;
   final StateNotifierProviderRef ref;
 
   Future<void> register({
