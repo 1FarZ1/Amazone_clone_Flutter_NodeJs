@@ -18,6 +18,11 @@ class ProductSt extends StateNotifier<List<Product>> {
   }
    
   void updateProduct(Product p) async {
-    state[state.indexOf(p)] = p;
+    state.where((element) {
+      if (element.id == p.id) {
+        element = p;
+      }
+      return true;
+    });
   }
 }
