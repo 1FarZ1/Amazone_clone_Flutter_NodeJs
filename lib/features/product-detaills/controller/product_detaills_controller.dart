@@ -9,15 +9,15 @@ import '../../../models/product.dart';
 final productDetaillsControllerProvider =
     StateNotifierProvider<ProductDetaillsController, AsyncValue>((ref) {
   return ProductDetaillsController(
-      productDetaillsRepoImpl: ref.watch(productDetaillsRepoProvider),
+      productDetaillsRepo: ref.watch(productDetaillsRepoProvider),
       ref: ref);
 });
 
 class ProductDetaillsController extends StateNotifier<AsyncValue<Product?>> {
   ProductDetaillsController(
-      {required this.productDetaillsRepoImpl, required this.ref})
+      {required this.productDetaillsRepo, required this.ref})
       : super(const AsyncData(null));
-  final ProductDetaillsRepoImpl productDetaillsRepoImpl;
+  final ProductDetaillsRepo productDetaillsRepo;
   final StateNotifierProviderRef ref;
 
   void rateProduct({required double rating}) async {
@@ -27,7 +27,7 @@ class ProductDetaillsController extends StateNotifier<AsyncValue<Product?>> {
     await ref.watch(sharedPreferenceProvider)?.then((pref) async {
       token = pref.getString("x-auth-token");
     });
-    var res = await productDetaillsRepoImpl.rateProduct(
+    var res = await productDetaillsRepo.rateProduct(
       productId: temp ?? "",
       token: token ?? "",
       rating: rating,
@@ -48,7 +48,7 @@ class ProductDetaillsController extends StateNotifier<AsyncValue<Product?>> {
     await ref.watch(sharedPreferenceProvider)?.then((pref) async {
       token = pref.getString("x-auth-token");
     });
-    var res = await productDetaillsRepoImpl.addToCart(
+    var res = await productDetaillsRepo.addToCart(
       productId: temp ?? "",
       token: token ?? "",
     );

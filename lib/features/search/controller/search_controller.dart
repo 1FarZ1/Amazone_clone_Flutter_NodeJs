@@ -8,13 +8,13 @@ import '../../../models/product.dart';
 final searchControllerProvider =
     StateNotifierProvider<SearchController, AsyncValue>((ref) {
   return SearchController(
-      searchRepoImpl: ref.watch(searchRepoProvider), ref: ref);
+      searchRepo: ref.watch(searchRepoProvider), ref: ref);
 });
 
 class SearchController extends StateNotifier<AsyncValue<List<Product>?>> {
-  SearchController({required this.searchRepoImpl, required this.ref})
+  SearchController({required this.searchRepo, required this.ref})
       : super(const AsyncData(null));
-  final SearchRepoImpl searchRepoImpl;
+  final SearchRepo searchRepo;
   final StateNotifierProviderRef ref;
   String searchQuery = '';
 
@@ -24,7 +24,7 @@ class SearchController extends StateNotifier<AsyncValue<List<Product>?>> {
     await ref.watch(sharedPreferenceProvider)?.then((pref) async {
       token = pref.getString("x-auth-token");
     });
-    await searchRepoImpl
+    await searchRepo
         .fetchSearchProducts(token: token ?? "", searchQuery: searchQuery)
         .then((value) {
       value.fold((failure) {

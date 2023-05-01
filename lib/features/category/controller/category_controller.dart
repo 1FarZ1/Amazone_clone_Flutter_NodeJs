@@ -9,13 +9,13 @@ import '../../../models/product.dart';
 final categoryControllerProvider =
     StateNotifierProvider<CategoryController, AsyncValue>((ref) {
   return CategoryController(
-      categoryRepoImpl: ref.watch(categoryRepoProvider), ref: ref);
+      categoryRepo: ref.watch(categoryRepoProvider), ref: ref);
 });
 
 class CategoryController extends StateNotifier<AsyncValue<List<Product>?>> {
-  CategoryController({required this.categoryRepoImpl, required this.ref})
+  CategoryController({required this.categoryRepo, required this.ref})
       : super(const AsyncData(null));
-  final CategoryRepoImpl categoryRepoImpl;
+  final CategoryRepo categoryRepo;
   final StateNotifierProviderRef ref;
 
   void fetchCategoryProducts(String category, BuildContext context) async {
@@ -24,7 +24,7 @@ class CategoryController extends StateNotifier<AsyncValue<List<Product>?>> {
     await ref.watch(sharedPreferenceProvider)?.then((pref) async {
       token = pref.getString("x-auth-token");
     });
-    await categoryRepoImpl
+    await categoryRepo
         .fetchCategoryProducts(token: token ?? "", category: category)
         .then((value) {
       value.fold((failure) {
