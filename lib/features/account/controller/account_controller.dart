@@ -7,13 +7,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 final accountControllerProvider =
     StateNotifierProvider<AccountController, AsyncValue>((ref) {
   return AccountController(
-      accountRepoImpl: ref.watch(accountRepoProvider), ref: ref);
+      accountRepo: ref.watch(accountRepoProvider), ref: ref);
 });
 
 class AccountController extends StateNotifier<AsyncValue> {
-  AccountController({required this.accountRepoImpl, required this.ref})
+  AccountController({required this.accountRepo, required this.ref})
       : super(const AsyncData(null));
-  final AccountRepoImpl accountRepoImpl;
+  final AccountRepo accountRepo;
   final StateNotifierProviderRef ref;
 
   void getOrders() async {
@@ -22,7 +22,7 @@ class AccountController extends StateNotifier<AsyncValue> {
     await ref.watch(sharedPreferenceProvider)?.then((pref) async {
       token = pref.getString("x-auth-token");
     });
-    var res = await accountRepoImpl.getOrders(
+    var res = await accountRepo.getOrders(
       token: token ?? "",
     );
 

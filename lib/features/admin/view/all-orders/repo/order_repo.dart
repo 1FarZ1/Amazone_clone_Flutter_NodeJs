@@ -22,7 +22,7 @@ class OrderRepoImpl implements OrderRepo {
       );
       var data = [];
       for (var i in res) {
-        data.add(Order.fromMap(res));
+        data.add(Order.fromMap(i));
       }
       return Right(data);
     } on Exception catch (e) {

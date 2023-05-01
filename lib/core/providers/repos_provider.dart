@@ -15,39 +15,39 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../features/admin/view/all-orders/repo/order_repo.dart';
 
 
-final authRepoProvider = Provider<AuthRepoImpl>((ref) {
+final authRepoProvider = Provider<AuthRepo>((ref) {
   return AuthRepoImpl(ref.read(apiServiceProvider));
 });
-final addProductRepoProvider = Provider<AddProductRepoImpl>((ref) {
+final addProductRepoProvider = Provider<AddProductRepo>((ref) {
   return AddProductRepoImpl(apiService: ref.read(apiServiceProvider));
 });
-final postsRepoProvider = Provider<PostsRepoImpl>((ref) {
+final postsRepoProvider = Provider<PostsRepo>((ref) {
   return PostsRepoImpl(apiService: ref.read(apiServiceProvider));
 });
-final categoryRepoProvider = Provider<CategoryRepoImpl>((ref) {
+final categoryRepoProvider = Provider<CategoryRepo>((ref) {
   return CategoryRepoImpl(apiService: ref.read(apiServiceProvider));
 });
-final searchRepoProvider = Provider<SearchRepoImpl>((ref) {
+final searchRepoProvider = Provider<SearchRepo>((ref) {
   return SearchRepoImpl(apiService: ref.read(apiServiceProvider));
 });
-final productDetaillsRepoProvider = Provider<ProductDetaillsRepoImpl>((ref) {
+final productDetaillsRepoProvider = Provider<ProductDetaillsRepo>((ref) {
   return ProductDetaillsRepoImpl(apiService: ref.read(apiServiceProvider));
 });
-final homeRepoProvider = Provider<HomeRepoImpl>((ref) {
+final homeRepoProvider = Provider<HomeRepo>((ref) {
   return HomeRepoImpl(apiService: ref.read(apiServiceProvider));
 });
-final cartRepoProvider = Provider<CartRepoImpl>((ref) {
+final cartRepoProvider = Provider<CartRepo>((ref) {
   return CartRepoImpl(apiService: ref.read(apiServiceProvider));
 });
-final adressRepoProvider = Provider<AddressRepoImpl>((ref) {
+final adressRepoProvider = Provider<AddressRepo>((ref) {
   return AddressRepoImpl(apiService: ref.read(apiServiceProvider));
 });
-final accountRepoProvider = Provider<AccountRepoImpl>((ref) {
+final accountRepoProvider = Provider<AccountRepo>((ref) {
   return AccountRepoImpl(apiService: ref.read(apiServiceProvider));
 });
-final orderRepoProvider = Provider<OrderRepoImpl>((ref) {
+final orderRepoProvider = Provider<OrderRepo>((ref) {
   return OrderRepoImpl(apiService: ref.read(apiServiceProvider));
 });
-final analyticsRepoProvider = Provider<AnalyticsRepoImpl>((ref) {
+final analyticsRepoProvider = Provider<AnalyticsRepo>((ref) {
   return AnalyticsRepoImpl(apiService: ref.read(apiServiceProvider));
 });

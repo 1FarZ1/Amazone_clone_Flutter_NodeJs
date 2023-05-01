@@ -3,7 +3,6 @@ import 'package:amazon_clone/features/admin/view/widgets/custom_app_bar_admin.da
 import 'package:flutter/material.dart';
 
 import '../../../core/common/bottom_bar.dart';
-import '../add_product/view/add_product_view.dart';
 import '../posts/view/posts_view.dart';
 import 'all-orders/orders_screen.dart';
 
