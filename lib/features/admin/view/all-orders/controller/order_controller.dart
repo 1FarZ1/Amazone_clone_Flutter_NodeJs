@@ -7,13 +7,13 @@ import '../repo/order_repo.dart';
 
 final ordersControllerProvider =
     StateNotifierProvider<OrderController, AsyncValue>((ref) {
-  return OrderController(orderRepoImpl: ref.watch(orderRepoProvider), ref: ref);
+  return OrderController(orderRepo: ref.watch(orderRepoProvider), ref: ref);
 });
 
 class OrderController extends StateNotifier<AsyncValue> {
-  OrderController({required this.orderRepoImpl, required this.ref})
+  OrderController({required this.orderRepo, required this.ref})
       : super(const AsyncData(null));
-  final OrderRepoImpl orderRepoImpl;
+  final OrderRepo orderRepo;
   final StateNotifierProviderRef ref;
 
   void getAllOrders() async {
@@ -22,7 +22,7 @@ class OrderController extends StateNotifier<AsyncValue> {
     await ref.watch(sharedPreferenceProvider)?.then((pref) async {
       token = pref.getString("x-auth-token");
     });
-    var res = await orderRepoImpl.getAllOrders(
+    var res = await orderRepo.getAllOrders(
       token: token ?? "",
     );
 

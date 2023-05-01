@@ -7,13 +7,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 final addProductControllerProvider =
     StateNotifierProvider<AddProductController, AsyncValue>((ref) {
   return AddProductController(
-      addProductRepoImpl: ref.watch(addProductRepoProvider), ref: ref);
+      addProductRepo: ref.watch(addProductRepoProvider), ref: ref);
 });
 
 class AddProductController extends StateNotifier<AsyncValue> {
-  AddProductController({required this.addProductRepoImpl, required this.ref})
+  AddProductController({required this.addProductRepo, required this.ref})
       : super(const AsyncData(null));
-  final AddProductRepoImpl addProductRepoImpl;
+  final AddProductRepo addProductRepo;
   final StateNotifierProviderRef ref;
 
   void addProduct(
@@ -31,7 +31,7 @@ class AddProductController extends StateNotifier<AsyncValue> {
       token = pref.getString("x-auth-token");
     });
 
-    state = await AsyncValue.guard(() => addProductRepoImpl.addProduct(
+    state = await AsyncValue.guard(() => addProductRepo.addProduct(
         token: token,
         name: name,
         images: images,

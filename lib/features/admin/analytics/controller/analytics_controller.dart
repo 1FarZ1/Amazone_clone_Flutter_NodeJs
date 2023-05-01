@@ -6,13 +6,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final analyticsControllerProvider =
     StateNotifierProvider<AnalyticsController, AsyncValue>((ref) {
-  return AnalyticsController(analyticsRepoImpl: ref.watch(analyticsRepoProvider), ref: ref);
+  return AnalyticsController(analyticsRepo: ref.watch(analyticsRepoProvider), ref: ref);
 });
 
 class AnalyticsController extends StateNotifier<AsyncValue> {
-  AnalyticsController({required this.analyticsRepoImpl, required this.ref})
+  AnalyticsController({required this.analyticsRepo, required this.ref})
       : super(const AsyncData(null));
-  final AnalyticsRepoImpl analyticsRepoImpl;
+  final AnalyticsRepo analyticsRepo;
   final StateNotifierProviderRef ref;
 
   void getAnalytics() async {
@@ -21,7 +21,7 @@ class AnalyticsController extends StateNotifier<AsyncValue> {
     await ref.watch(sharedPreferenceProvider)?.then((pref) async {
       token = pref.getString("x-auth-token");
     });
-    var res = await analyticsRepoImpl.getAnalytics(
+    var res = await analyticsRepo.getAnalytics(
       token: token ?? "",
     );
 

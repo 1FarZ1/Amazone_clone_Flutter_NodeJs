@@ -1,21 +1,20 @@
 
 import 'package:amazon_clone/core/providers/repos_provider.dart';
 import 'package:amazon_clone/core/providers/shared_preference_provider.dart';
-import 'package:amazon_clone/features/admin/posts/repo/posts_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../../../../models/product.dart';
+import '../repo/posts_repo.dart';
 
 final postControllerProvider =
     StateNotifierProvider<PostsController, AsyncValue>((ref) {
-  return PostsController(postsRepoImpl: ref.watch(postsRepoProvider), ref: ref);
+  return PostsController(postsRepo: ref.watch(postsRepoProvider), ref: ref);
 });
 
 class PostsController extends StateNotifier<AsyncValue<List<Product>?>> {
-  PostsController({required this.postsRepoImpl, required this.ref})
+  PostsController({required this.postsRepo, required this.ref})
       : super(const AsyncData(null));
-  final PostsRepoImpl postsRepoImpl;
+  final PostsRepo postsRepo;
   final StateNotifierProviderRef ref;
 
   Future<void> getPosts({required BuildContext context}) async {
@@ -24,7 +23,7 @@ class PostsController extends StateNotifier<AsyncValue<List<Product>?>> {
     await ref.watch(sharedPreferenceProvider)?.then((pref) async {
       token = pref.getString("x-auth-token");
     });
-    await postsRepoImpl.getPosts(token: token ?? "").then((value) {
+    await postsRepo.getPosts(token: token ?? "").then((value) {
       value.fold((failure) {
         state = AsyncValue.error(failure, StackTrace.empty);
       }, (products) {
@@ -39,7 +38,7 @@ class PostsController extends StateNotifier<AsyncValue<List<Product>?>> {
     await ref.watch(sharedPreferenceProvider)?.then((pref) async {
       token = pref.getString("x-auth-token");
     });
-    await postsRepoImpl.deletePosts(token: token ?? "", id: id).then((value) {
+    await postsRepo.deletePosts(token: token ?? "", id: id).then((value) {
       value.fold((failure) {
         state = AsyncValue.error(failure.errorMessage, StackTrace.empty);
       }, (products) {
